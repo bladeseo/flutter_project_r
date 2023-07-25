@@ -1,0 +1,20 @@
+{
+  "login_start": "로그인 시작욤",
+  "login_et_user_email": "이메일을 입력하세요",
+  "login_et_user_password": "비밀번호를 입력하세요",
+  "login_btn_forgot_password": "비밀번호 초기화",
+  "login_btn_sign_in": "로그인",
+  "login_error_fill_fields": "필수 입력 항목을 입력하세요",
+  "login_end": "------------------------------------------------------------------------------------",
+
+  "home_start": "홈 화면용",
+  "home_tv_posts": "포스트",
+  "home_tv_error": "에러",
+  "home_tv_no_post_found": "등록된 포스트가 없습니다.",
+  "home_tv_choose_language": "언어 선택",
+  "home_end": "-------------------------------------------------------------------------------------",
+
+  "roulette_start": "룰렛 시작욤",
+  "roulette_btn_rotate": "돌리기",
+  "roulette_end": "------------------------------------------------------------------------------------"
+}
