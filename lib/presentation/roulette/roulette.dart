@@ -69,7 +69,7 @@ class _RouletteScreenState extends State<RouletteScreen> {
                     ),
                   ],
                 )
-              : Center(child: _buildRightSide()),
+              : Center(child: _buildLeftSide()), // _buildRightSide()),
           Observer(
             builder: (context) {
               return _userStore.success
@@ -93,7 +93,7 @@ class _RouletteScreenState extends State<RouletteScreen> {
   Widget _buildLeftSide() {
     return SizedBox.expand(
       child: Image.asset(
-        Assets.carBackground,
+        Assets.appLogo, // carBackground,
         fit: BoxFit.cover,
       ),
     );

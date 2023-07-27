@@ -20,11 +20,55 @@ class _HomeScreenState extends State<HomeScreen> {
   final ThemeStore _themeStore = getIt<ThemeStore>();
   final LanguageStore _languageStore = getIt<LanguageStore>();
 
+  int currentPageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: PostListScreen(),
+      // body: PostListScreen(),
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(Icons.bookmark),
+            icon: Icon(Icons.bookmark_border),
+            label: '선택지',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.explore),
+            label: '룰렛',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.commute),
+            label: '설정',
+          ),
+        ],
+      ),
+      body: <Widget>[
+        Container(
+          child: PostListScreen(),
+          
+          // color: Colors.red,
+          // alignment: Alignment.center,
+          // child: const Text('Page 1'),
+        ),
+        Container(
+          color: Colors.green,
+          alignment: Alignment.center,
+          child: const Text('Page 2'),
+        ),
+        Container(
+          color: Colors.blue,
+          alignment: Alignment.center,
+          child: const Text('Page 3'),
+        ),
+      ][currentPageIndex],
     );
   }
 
