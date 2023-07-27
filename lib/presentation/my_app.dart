@@ -11,9 +11,11 @@ import 'package:boilerplate/presentation/login/store/login_store.dart';
 import 'package:boilerplate/presentation/roulette/roulette.dart';
 
 import 'package:boilerplate/utils/locale/app_localization.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../di/service_locator.dart';

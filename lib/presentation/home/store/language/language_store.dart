@@ -18,6 +18,7 @@ abstract class _LanguageStore with Store {
 
   // supported languages
   List<Language> supportedLanguages = [
+    Language(code: 'KR', locale: 'ko', language: 'Korean'),
     Language(code: 'US', locale: 'en', language: 'English'),
     Language(code: 'DK', locale: 'da', language: 'Danish'),
     Language(code: 'ES', locale: 'es', language: 'España'),
