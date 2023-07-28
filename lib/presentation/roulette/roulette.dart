@@ -16,9 +16,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'dart:math'; // for random num.
+import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../di/service_locator.dart';
 
 class RouletteScreen extends StatefulWidget {
+  // const RouletteScreen({Key? key}) : super(key: key); // 없어도 되나 봄
+  
   @override
   _RouletteScreenState createState() => _RouletteScreenState();
 }
@@ -36,6 +41,65 @@ class _RouletteScreenState extends State<RouletteScreen> {
   //focus node:-----------------------------------------------------------------
   late FocusNode _passwordFocusNode;
 
+  // xmlnsXlink="http://www.w3.org/1999/xlink"
+
+  // viewBox="-100 -100 200 200"
+  // width=100 height=100
+  // width="100%" preserveAspectRatio="xMidYMid meet"
+  String rawSvg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 200 200" width="100%" preserveAspectRatio="xMidYMid meet" fill="none" stroke-width="0.5">
+ <g>
+  <title>Layer 1</title>
+  <circle r="100" fill="#e1d85d" stroke="gray"/>
+  <line x2="0" y2="-100" stroke="gray" stroke-width="0.2"/>
+  <line x2="0" y2="100" stroke="gray" stroke-width="0.2"/>
+  <line x2="100" y2="0" stroke="gray" stroke-width="0.2"/>
+  <line x2="-100" y2="0" stroke="gray" stroke-width="0.2"/>
+  <text class="small" text-anchor="middle" transform="translate(50,-50) rotate(45)" style="fill:red;">A1</text>
+  <text class="small" text-anchor="middle" transform="translate(50,50) rotate(135)" style="fill:blue;">B2</text>
+  <text class="small" text-anchor="middle" transform="translate(-50,-50) rotate(-45)" style="fill:green;">C3</text>
+  <text class="small" text-anchor="middle" transform="translate(-50,50) rotate(-135)" style="fill:black;">D4</text>
+ </g>
+</svg>''';
+
+  int menuCount = 4;
+  int clickCount = 0; // 버튼 클릭수
+
+  double baseTurns = 4.0; // 기본 회전수
+  double currTurns = 0.0;
+  double prevTurns = 0.0;
+
+  // => arrow func. 는 1줄만 되나 봄
+  void _changeRotation() {
+    setState(() {
+      // 최초 클릭에만 약간 비틀기
+      if (clickCount < 1) {
+        currTurns = 1 / (2 * menuCount.toDouble()); // 가운데 맞추기(한 칸의 절반)
+      }
+
+      prevTurns = currTurns;
+      // currTurns += (0.125 / 2.0);
+      currTurns += baseTurns + (Random().nextInt(menuCount - 1) / menuCount); // + 아이템 선택용 회전
+
+      clickCount++;
+    });
+  }
+
+  String getResult(double degree) {
+    String result = "";
+
+    if (degree == 0.125) {
+      result = "CCCCC";
+    } else if (degree == 0.375) {
+      result = "DDDDD";
+    } else if (degree == 0.625) {
+      result = "BBBBB";
+    } else if (degree == 0.875) {
+      result = "AAAAA";
+    }
+
+    return result;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -45,142 +109,50 @@ class _RouletteScreenState extends State<RouletteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      primary: true,
-      appBar: EmptyAppBar(),
-      body: _buildBody(),
-    );
-  }
-
-  // body methods:--------------------------------------------------------------
-  Widget _buildBody() {
-    return Material(
-      child: Stack(
-        children: <Widget>[
-          MediaQuery.of(context).orientation == Orientation.landscape
-              ? Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: _buildLeftSide(),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: _buildRightSide(),
-                    ),
-                  ],
-                )
-              : Center(child: _buildLeftSide()), // _buildRightSide()),
-          Observer(
-            builder: (context) {
-              return _userStore.success
-                  ? navigate(context)
-                  : _showErrorMessage(_formStore.errorStore.errorMessage);
-            },
-          ),
-          Observer(
-            builder: (context) {
-              return Visibility(
-                visible: _userStore.isLoading,
-                child: CustomProgressIndicatorWidget(),
-              );
-            },
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLeftSide() {
-    return SizedBox.expand(
-      child: Image.asset(
-        Assets.appLogo, // carBackground,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Widget _buildRightSide() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        // child: const Text('Page 2'),
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            AppIconWidget(image: 'assets/icons/ic_appicon.png'),
-            SizedBox(height: 24.0),
-            _buildUserIdField(),
-            _buildPasswordField(),
-            _buildForgotPasswordButton(),
-            _buildSignInButton()
+            ElevatedButton(
+              onPressed: _changeRotation,
+              child: new Text('Rotate : ' + (currTurns - prevTurns).toString()),
+            ),
+            TextButton(
+              onPressed: _changeRotation,
+              child: new Text('Click Count : ' + clickCount.toString()),
+            ),
+            TextButton(
+              onPressed: _changeRotation,
+              child: new Text('Result : ' + (currTurns % 1).toString() + ' => ' + getResult(currTurns % 1)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(50),
+              child: AnimatedRotation(
+                  turns: currTurns,
+                  duration: const Duration(seconds: 2),
+                  child: SvgPicture.string(rawSvg,
+                      width: 500,
+                      height: 500,
+                      fit: BoxFit.fitWidth)
+
+                // SvgPicture.asset(
+                // 'assets/images/menuwheel.svg',
+                // semanticsLabel: 'My SVG Image'
+                // )
+                // child: Image.asset('assets/images/menuwheel1.png')
+                // child: const FlutterLogo(size: 300),
+              ),
+            ),
           ],
-        ),
-      ),
+        )
+
+      // primary: true,
+      // appBar: EmptyAppBar(),
+      // body: _buildBody(),
     );
   }
 
-  Widget _buildUserIdField() {
-    return Observer(
-      builder: (context) {
-        return TextFieldWidget(
-          hint: AppLocalizations.of(context).translate('roulette_btn_rotate'),
-          inputType: TextInputType.emailAddress,
-          icon: Icons.person,
-          iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
-          textController: _userEmailController,
-          inputAction: TextInputAction.next,
-          autoFocus: false,
-          onChanged: (value) {
-            _formStore.setUserId(_userEmailController.text);
-          },
-          onFieldSubmitted: (value) {
-            FocusScope.of(context).requestFocus(_passwordFocusNode);
-          },
-          errorText: _formStore.formErrorStore.userEmail,
-        );
-      },
-    );
-  }
-
-  Widget _buildPasswordField() {
-    return Observer(
-      builder: (context) {
-        return TextFieldWidget(
-          hint:
-              AppLocalizations.of(context).translate('login_et_user_password'),
-          isObscure: true,
-          padding: EdgeInsets.only(top: 16.0),
-          icon: Icons.lock,
-          iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
-          textController: _passwordController,
-          focusNode: _passwordFocusNode,
-          errorText: _formStore.formErrorStore.password,
-          onChanged: (value) {
-            _formStore.setPassword(_passwordController.text);
-          },
-        );
-      },
-    );
-  }
-
-  Widget _buildForgotPasswordButton() {
-    return Align(
-      alignment: FractionalOffset.centerRight,
-      child: MaterialButton(
-        padding: EdgeInsets.all(0.0),
-        child: Text(
-          AppLocalizations.of(context).translate('login_btn_forgot_password'),
-          style: Theme.of(context)
-              .textTheme
-              .caption
-              ?.copyWith(color: Colors.orangeAccent),
-        ),
-        onPressed: () {},
-      ),
-    );
-  }
-
+  /*
   Widget _buildSignInButton() {
     return RoundedButtonWidget(
       buttonText: AppLocalizations.of(context).translate('login_btn_sign_in'),
@@ -196,19 +168,7 @@ class _RouletteScreenState extends State<RouletteScreen> {
       },
     );
   }
-
-  Widget navigate(BuildContext context) {
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(Preferences.is_logged_in, true);
-    });
-
-    Future.delayed(Duration(milliseconds: 0), () {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.home, (Route<dynamic> route) => false);
-    });
-
-    return Container();
-  }
+  */
 
   // General Methods:-----------------------------------------------------------
   _showErrorMessage(String message) {

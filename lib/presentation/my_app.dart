@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           // home: _userStore.isLoggedIn ? HomeScreen() : LoginScreen(),
-          home: HomeScreen(),
+          home: HomeScreen() // RouletteScreen(), // HomeScreen(),
         );
       },
     );

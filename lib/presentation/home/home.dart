@@ -1,8 +1,12 @@
 import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/di/service_locator.dart';
+
 import 'package:boilerplate/presentation/home/store/language/language_store.dart';
 import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
 import 'package:boilerplate/presentation/post/post_list.dart';
+import 'package:boilerplate/presentation/roulette/roulette.dart';
+import 'package:boilerplate/presentation/login/login.dart';
+
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -53,20 +57,24 @@ class _HomeScreenState extends State<HomeScreen> {
       body: <Widget>[
         Container(
           child: PostListScreen(),
-          
+
           // color: Colors.red,
           // alignment: Alignment.center,
           // child: const Text('Page 1'),
         ),
         Container(
-          color: Colors.green,
-          alignment: Alignment.center,
-          child: const Text('Page 2'),
+          child: RouletteScreen(),
+
+          // color: Colors.green,
+          // alignment: Alignment.center,
+          // child: const Text('Page 2'),
         ),
         Container(
-          color: Colors.blue,
-          alignment: Alignment.center,
-          child: const Text('Page 3'),
+          child: LoginScreen(),
+
+          // color: Colors.blue,
+          // alignment: Alignment.center,
+          // child: const Text('Page 3'),
         ),
       ][currentPageIndex],
     );
