@@ -228,7 +228,7 @@ This file contains all the routes for your application.
 ```dart
 import 'package:flutter/material.dart';
 
-import 'ui/post/post_list.dart';
+import 'ui/post/menu_list.dart';
 import 'ui/login/login.dart';
 import 'ui/splash/splash.dart';
 

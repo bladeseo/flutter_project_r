@@ -12,4 +12,7 @@ class Endpoints {
 
   // booking endpoints
   static const String getPosts = baseUrl + "/posts";
+
+  static const String getMenus = baseUrl + "/posts";
+  // static const String getMenus = baseUrl + "/menus";
 }

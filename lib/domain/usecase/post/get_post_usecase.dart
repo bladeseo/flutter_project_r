@@ -1,5 +1,6 @@
 
 import 'package:boilerplate/core/domain/usecase/use_case.dart';
+
 import 'package:boilerplate/domain/entity/post/post_list.dart';
 import 'package:boilerplate/domain/repository/post/post_repository.dart';
 

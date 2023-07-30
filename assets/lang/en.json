@@ -14,6 +14,11 @@
   "home_tv_choose_language": "Choose Language",
   "home_end": "-------------------------------------------------------------------------------------",
 
+  "menu_start": "Below are list of strings for menu",
+  "home_tv_menus": "Menus",
+  "home_tv_no_menu_found": "No menus found",
+  "menu_end": "-------------------------------------------------------------------------------------",
+
   "roulette_start": "roulette start",
   "roulette_btn_rotate": "rotate",
   "roulette_end": "------------------------------------------------------------------------------------"
