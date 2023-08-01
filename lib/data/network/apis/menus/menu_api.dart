@@ -20,7 +20,11 @@ class MenuApi {
   Future<MenuList> getMenus() async {
     try {
       final res = await _dioClient.dio.get(Endpoints.getMenus);
-      return MenuList.fromJson(res.data);
+
+      print('res.data : ');
+      // print(res.data);
+
+      return MenuList.fromJson(res.data); // res.data
     } catch (e) {
       print(e.toString());
       throw e;

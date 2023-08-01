@@ -73,16 +73,16 @@ class _MenuListScreenState extends State<MenuListScreen> {
   Widget _buildListItem(int position) {
     return ListTile(
       dense: true,
-      leading: Icon(Icons.cloud_circle),
+      leading: Icon(Icons.access_time), //  .cloud_circle
       title: Text(
-        '${_menuStore.menuList?.menus?[position].title}',
+        '${_menuStore.menuList?.menus?[position].id}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
         style: Theme.of(context).textTheme.subtitle1,
       ),
       subtitle: Text(
-        '${_menuStore.menuList?.menus?[position].body}',
+        '${_menuStore.menuList?.menus?[position].price}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,

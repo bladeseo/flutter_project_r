@@ -28,6 +28,7 @@ class PostDataSource {
     return await _postsStore.count(_sembastClient.database);
   }
 
+  // 검색 용도
   Future<List<Post>> getAllSortedByFilter({List<Filter>? filters}) async {
     //creating finder
     final finder = Finder(
@@ -48,6 +49,7 @@ class PostDataSource {
     }).toList();
   }
 
+  // 호출하는 곳이 없음 -.-a
   Future<PostList> getPostsFromDb() async {
 
     print('Loading from database');

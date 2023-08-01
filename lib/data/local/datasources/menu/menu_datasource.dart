@@ -30,6 +30,7 @@ class MenuDataSource {
     return await _menusStore.count(_sembastClient.database);
   }
 
+  // 검색 용도
   Future<List<Menu>> getAllSortedByFilter({List<Filter>? filters}) async {
     //creating finder
     final finder = Finder(
@@ -50,6 +51,7 @@ class MenuDataSource {
     }).toList();
   }
 
+  // 호출하는 곳이 없음 -.-a
   Future<MenuList> getMenusFromDb() async {
 
     print('Loading from database');

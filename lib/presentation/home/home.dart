@@ -60,8 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: <Widget>[
         Container(
-          // child: MenuListScreen(),
-          child: PostListScreen(),
+          child: MenuListScreen(),
+          // child: PostListScreen(),
 
           // color: Colors.red,
           // alignment: Alignment.center,
