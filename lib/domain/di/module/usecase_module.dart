@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:boilerplate/domain/repository/post/post_repository.dart';
-import 'package:boilerplate/domain/repository/menu/menu_repository.dart';
+import 'package:boilerplate/domain/repository/menu/menu_repository_rest.dart';
 
 import 'package:boilerplate/domain/repository/user/user_repository.dart';
 

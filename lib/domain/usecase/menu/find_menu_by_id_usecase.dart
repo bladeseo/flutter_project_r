@@ -1,7 +1,7 @@
 import 'package:boilerplate/core/domain/usecase/use_case.dart';
 
 import 'package:boilerplate/domain/entity/menu/menu.dart';
-import 'package:boilerplate/domain/repository/menu/menu_repository.dart';
+import 'package:boilerplate/domain/repository/menu/menu_repository_rest.dart';
 
 class FindMenuByIdUseCase extends UseCase<List<Menu>, int> {
   final MenuRepository _menuRepository;

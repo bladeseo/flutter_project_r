@@ -50,4 +50,21 @@ class SharedPreferenceHelper {
   Future<void> changeLanguage(String language) {
     return _sharedPreference.setString(Preferences.current_language, language);
   }
+
+  // Menu:------------------------------------------------------
+  bool get isUse {
+    return _sharedPreference.getBool(Preferences.is_use) ?? false;
+  }
+
+  Future<void> toggleUseYn(bool value) {
+    return _sharedPreference.setBool(Preferences.is_use, value);
+  }
+
+  String? get currentTitle {
+    return _sharedPreference.getString(Preferences.current_title);
+  }
+
+  Future<void> changeTitle(String title) {
+    return _sharedPreference.setString(Preferences.current_title, title);
+  }
 }

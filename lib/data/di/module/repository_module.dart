@@ -6,7 +6,7 @@ import 'package:boilerplate/data/repository/post/post_repository_impl.dart';
 
 import 'package:boilerplate/data/local/datasources/menu/menu_datasource.dart';
 import 'package:boilerplate/data/network/apis/menus/menu_api.dart';
-import 'package:boilerplate/data/repository/menu/menu_repository_impl.dart';
+import 'package:boilerplate/data/repository/menu/menu_repository_impl_rest.dart';
 
 import 'package:boilerplate/data/repository/setting/setting_repository_impl.dart';
 import 'package:boilerplate/data/repository/user/user_repository_impl.dart';
@@ -14,7 +14,7 @@ import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
 
 import 'package:boilerplate/domain/repository/post/post_repository.dart';
 
-import 'package:boilerplate/domain/repository/menu/menu_repository.dart';
+import 'package:boilerplate/domain/repository/menu/menu_repository_rest.dart';
 
 import 'package:boilerplate/domain/repository/setting/setting_repository.dart';
 import 'package:boilerplate/domain/repository/user/user_repository.dart';

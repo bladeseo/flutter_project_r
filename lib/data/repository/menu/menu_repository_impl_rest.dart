@@ -7,7 +7,7 @@ import 'package:boilerplate/data/local/datasources/menu/menu_datasource.dart';
 import 'package:boilerplate/data/network/apis/menus/menu_api.dart';
 import 'package:boilerplate/domain/entity/menu/menu.dart';
 import 'package:boilerplate/domain/entity/menu/menu_list.dart';
-import 'package:boilerplate/domain/repository/menu/menu_repository.dart';
+import 'package:boilerplate/domain/repository/menu/menu_repository_rest.dart';
 
 import 'package:sembast/sembast.dart';
 
@@ -24,12 +24,12 @@ class MenuRepositoryImpl extends MenuRepository {
   // Post: ---------------------------------------------------------------------
   @override
   Future<MenuList> getMenus() async {
-    // check to see if posts are present in database, then fetch from database
+    // check to see if menus are present in database, then fetch from database
     // else make a network call to get all posts, store them into database for
     // later use
     return await _menuApi.getMenus().then((menusList) {
       menusList.menus?.forEach((menu) {
-        _menuDataSource.insert(menu);
+        // _menuDataSource.insert(menu);
       });
 
       return menusList;

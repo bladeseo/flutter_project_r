@@ -25,4 +25,20 @@ class SettingRepositoryImpl extends SettingRepository {
 
   @override
   String? get currentLanguage => _sharedPrefsHelper.currentLanguage;
+
+  // Menu: -----------------------------------------------------------------
+  @override
+  Future<void> toggleUseYn(bool value) =>
+      _sharedPrefsHelper.toggleUseYn(value);
+
+  @override
+  bool get isUse => _sharedPrefsHelper.isUse;
+
+  // Language: -----------------------------------------------------------------
+  @override
+  Future<void> changeTitle(String value) =>
+      _sharedPrefsHelper.changeTitle(value);
+
+  @override
+  String? get currentTitle => _sharedPrefsHelper.currentTitle;
 }
