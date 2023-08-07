@@ -6,13 +6,13 @@ import 'package:mobx/mobx.dart';
 import 'package:boilerplate/domain/entity/menu/menu_list.dart';
 import '../../../domain/usecase/menu/get_menu_usecase.dart';
 
-part 'menu_store.g.dart';
+part 'menu_store_rest.g.dart'; // 네이밍 변경시 맞춰서 바꿔줄 것
 
-class MenuStore = _MenuStore with _$MenuStore;
+class MenuStoreRest = _MenuStoreRest with _$MenuStoreRest;
 
-abstract class _MenuStore with Store {
+abstract class _MenuStoreRest with Store {
   // constructor:---------------------------------------------------------------
-  _MenuStore(this._getMenuUseCase, this.errorStore);
+  _MenuStoreRest(this._getMenuUseCase, this.errorStore);
 
   // use cases:-----------------------------------------------------------------
   final GetMenuUseCase _getMenuUseCase;

@@ -4,7 +4,7 @@ import 'package:boilerplate/domain/entity/menu/menu.dart';
 import 'package:boilerplate/domain/repository/menu/menu_repository_rest.dart';
 
 class InsertMenuUseCase extends UseCase<int, Menu> {
-  final MenuRepository _menuRepository;
+  final MenuRepositoryRest _menuRepository;
 
   InsertMenuUseCase(this._menuRepository);
 

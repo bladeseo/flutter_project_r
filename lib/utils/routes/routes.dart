@@ -1,6 +1,6 @@
 import 'package:boilerplate/presentation/home/home.dart';
 
-import 'package:boilerplate/presentation/menu/menu_list.dart';
+import 'package:boilerplate/presentation/menu/menu_list_rest.dart';
 
 import 'package:boilerplate/presentation/login/login.dart';
 import 'package:boilerplate/presentation/roulette/roulette.dart';
@@ -24,7 +24,7 @@ class Routes {
 
     home: (BuildContext context) => HomeScreen(),
 
-    menu: (BuildContext context) => MenuListScreen(),
+    menu: (BuildContext context) => MenuListScreenRest(),
 
     roulette: (BuildContext context) => RouletteScreen(),
   };

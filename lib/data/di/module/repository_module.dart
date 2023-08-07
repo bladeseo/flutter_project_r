@@ -37,7 +37,7 @@ mixin RepositoryModule {
       getIt<PostDataSource>(),
     ));
 
-    getIt.registerSingleton<MenuRepository>(MenuRepositoryImpl(
+    getIt.registerSingleton<MenuRepositoryRest>(MenuRepositoryImplRest(
       getIt<MenuApi>(),
       getIt<MenuDataSource>(),
     ));

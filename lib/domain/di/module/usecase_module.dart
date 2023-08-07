@@ -55,19 +55,19 @@ mixin UseCaseModule {
 
     // menu:--------------------------------------------------------------------
     getIt.registerSingleton<GetMenuUseCase>(
-      GetMenuUseCase(getIt<MenuRepository>()),
+      GetMenuUseCase(getIt<MenuRepositoryRest>()),
     );
     getIt.registerSingleton<FindMenuByIdUseCase>(
-      FindMenuByIdUseCase(getIt<MenuRepository>()),
+      FindMenuByIdUseCase(getIt<MenuRepositoryRest>()),
     );
     getIt.registerSingleton<InsertMenuUseCase>(
-      InsertMenuUseCase(getIt<MenuRepository>()),
+      InsertMenuUseCase(getIt<MenuRepositoryRest>()),
     );
     getIt.registerSingleton<UpdateMenuUseCase>(
-      UpdateMenuUseCase(getIt<MenuRepository>()),
+      UpdateMenuUseCase(getIt<MenuRepositoryRest>()),
     );
     getIt.registerSingleton<DeleteMenuUseCase>(
-      DeleteMenuUseCase(getIt<MenuRepository>()),
+      DeleteMenuUseCase(getIt<MenuRepositoryRest>()),
     );
   }
 }

@@ -6,7 +6,7 @@ import 'package:boilerplate/domain/repository/menu/menu_repository_rest.dart';
 
 class GetMenuUseCase extends UseCase<MenuList, void> {
 
-  final MenuRepository _menuRepository;
+  final MenuRepositoryRest _menuRepository;
 
   GetMenuUseCase(this._menuRepository);
 

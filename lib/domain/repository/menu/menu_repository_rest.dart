@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:boilerplate/domain/entity/menu/menu.dart';
 import 'package:boilerplate/domain/entity/menu/menu_list.dart';
 
-abstract class MenuRepository {
+abstract class MenuRepositoryRest {
   Future<MenuList> getMenus();
 
   Future<List<Menu>> findMenuById(int id);

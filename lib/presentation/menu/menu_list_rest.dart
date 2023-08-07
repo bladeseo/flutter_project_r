@@ -2,28 +2,28 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:boilerplate/core/widgets/progress_indicator_widget.dart';
 import 'package:boilerplate/di/service_locator.dart';
 
-import 'package:boilerplate/presentation/menu/store/menu_store.dart';
+import 'package:boilerplate/presentation/menu/store/menu_store_rest.dart';
 
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class MenuListScreen extends StatefulWidget {
+class MenuListScreenRest extends StatefulWidget {
   @override
-  _MenuListScreenState createState() => _MenuListScreenState();
+  _MenuListScreenRestState createState() => _MenuListScreenRestState();
 }
 
-class _MenuListScreenState extends State<MenuListScreen> {
+class _MenuListScreenRestState extends State<MenuListScreenRest> {
   //stores:---------------------------------------------------------------------
-  final MenuStore _menuStore = getIt<MenuStore>();
+  final MenuStoreRest _menuStoreRest = getIt<MenuStoreRest>();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     // check to see if already called api
-    if (!_menuStore.loading) {
-      _menuStore.getMenus();
+    if (!_menuStoreRest.loading) {
+      _menuStoreRest.getMenus();
     }
   }
 
@@ -45,7 +45,7 @@ class _MenuListScreenState extends State<MenuListScreen> {
   Widget _buildMainContent() {
     return Observer(
       builder: (context) {
-        return _menuStore.loading
+        return _menuStoreRest.loading
             ? CustomProgressIndicatorWidget()
             : Material(child: _buildListView());
       },
@@ -53,9 +53,9 @@ class _MenuListScreenState extends State<MenuListScreen> {
   }
 
   Widget _buildListView() {
-    return _menuStore.menuList != null
+    return _menuStoreRest.menuList != null
         ? ListView.separated(
-            itemCount: _menuStore.menuList!.menus!.length,
+            itemCount: _menuStoreRest.menuList!.menus!.length,
             separatorBuilder: (context, position) {
               return Divider();
             },
@@ -75,14 +75,14 @@ class _MenuListScreenState extends State<MenuListScreen> {
       dense: true,
       leading: Icon(Icons.access_time), //  .cloud_circle
       title: Text(
-        '${_menuStore.menuList?.menus?[position].id}',
+        '${_menuStoreRest.menuList?.menus?[position].id}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
         style: Theme.of(context).textTheme.subtitle1,
       ),
       subtitle: Text(
-        '${_menuStore.menuList?.menus?[position].price}',
+        '${_menuStoreRest.menuList?.menus?[position].price}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
@@ -93,8 +93,8 @@ class _MenuListScreenState extends State<MenuListScreen> {
   Widget _handleErrorMessage() {
     return Observer(
       builder: (context) {
-        if (_menuStore.errorStore.errorMessage.isNotEmpty) {
-          return _showErrorMessage(_menuStore.errorStore.errorMessage);
+        if (_menuStoreRest.errorStore.errorMessage.isNotEmpty) {
+          return _showErrorMessage(_menuStoreRest.errorStore.errorMessage);
         }
 
         return SizedBox.shrink();

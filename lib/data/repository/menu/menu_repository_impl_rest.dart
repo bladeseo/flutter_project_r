@@ -11,7 +11,7 @@ import 'package:boilerplate/domain/repository/menu/menu_repository_rest.dart';
 
 import 'package:sembast/sembast.dart';
 
-class MenuRepositoryImpl extends MenuRepository {
+class MenuRepositoryImplRest extends MenuRepositoryRest {
   // data source object
   final MenuDataSource _menuDataSource;
 
@@ -19,7 +19,7 @@ class MenuRepositoryImpl extends MenuRepository {
   final MenuApi _menuApi;
 
   // constructor
-  MenuRepositoryImpl(this._menuApi, this._menuDataSource);
+  MenuRepositoryImplRest(this._menuApi, this._menuDataSource);
 
   // Post: ---------------------------------------------------------------------
   @override

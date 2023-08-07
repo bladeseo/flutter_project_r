@@ -6,7 +6,7 @@ import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
 
 import 'package:boilerplate/presentation/post/post_list.dart';
 
-import 'package:boilerplate/presentation/menu/menu_list.dart';
+import 'package:boilerplate/presentation/menu/menu_list_rest.dart';
 
 import 'package:boilerplate/presentation/roulette/roulette.dart';
 import 'package:boilerplate/presentation/login/login.dart';
@@ -60,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: <Widget>[
         Container(
-          child: MenuListScreen(),
+          child: RouletteScreen(),
+          // child: MenuListScreenRest(),
           // child: PostListScreen(),
 
           // color: Colors.red,

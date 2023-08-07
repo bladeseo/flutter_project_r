@@ -17,7 +17,7 @@ import 'package:boilerplate/presentation/login/store/login_store.dart';
 
 import 'package:boilerplate/presentation/post/store/post_store.dart';
 
-import 'package:boilerplate/presentation/menu/store/menu_store.dart';
+import 'package:boilerplate/presentation/menu/store/menu_store_rest.dart';
 
 
 import '../../../di/service_locator.dart';
@@ -49,8 +49,8 @@ mixin StoreModule {
       ),
     );
 
-    getIt.registerSingleton<MenuStore>(
-      MenuStore(
+    getIt.registerSingleton<MenuStoreRest>(
+      MenuStoreRest(
         getIt<GetMenuUseCase>(),
         getIt<ErrorStore>(),
       ),
