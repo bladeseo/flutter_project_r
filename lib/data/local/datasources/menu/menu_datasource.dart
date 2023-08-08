@@ -1,8 +1,8 @@
 import 'package:boilerplate/core/data/local/sembast/sembast_client.dart';
 import 'package:boilerplate/data/local/constants/db_constants.dart';
 
-import 'package:boilerplate/domain/entity/menu/menu.dart';
-import 'package:boilerplate/domain/entity/menu/menu_list.dart';
+import 'package:boilerplate/domain/entity/menu/menu_rest.dart';
+import 'package:boilerplate/domain/entity/menu/menu_rest_list.dart';
 
 import 'package:sembast/sembast.dart';
 
@@ -22,8 +22,8 @@ class MenuDataSource {
   MenuDataSource(this._sembastClient);
 
   // DB functions:--------------------------------------------------------------
-  Future<int> insert(Menu menu) async {
-    return await _menusStore.add(_sembastClient.database, menu.toMap());
+  Future<int> insert(MenuRest menuRest) async {
+    return await _menusStore.add(_sembastClient.database, menuRest.toMap());
   }
 
   Future<int> count() async {
@@ -31,7 +31,7 @@ class MenuDataSource {
   }
 
   // 검색 용도
-  Future<List<Menu>> getAllSortedByFilter({List<Filter>? filters}) async {
+  Future<List<MenuRest>> getAllSortedByFilter({List<Filter>? filters}) async {
     //creating finder
     final finder = Finder(
         filter: filters != null ? Filter.and(filters) : null,
@@ -44,10 +44,10 @@ class MenuDataSource {
 
     // Making a List<Post> out of List<RecordSnapshot>
     return recordSnapshots.map((snapshot) {
-      final menu = Menu.fromMap(snapshot.value);
+      final menuRest = MenuRest.fromMap(snapshot.value);
       // An ID is a key of a record from the database.
-      menu.id = snapshot.key;
-      return menu;
+      menuRest.id = snapshot.key;
+      return menuRest;
     }).toList();
   }
 
@@ -68,29 +68,29 @@ class MenuDataSource {
     if(recordSnapshots.length > 0) {
       menusList = MenuList(
           menus: recordSnapshots.map((snapshot) {
-            final menu = Menu.fromMap(snapshot.value);
+            final menuRest = MenuRest.fromMap(snapshot.value);
             // An ID is a key of a record from the database.
-            menu.id = snapshot.key;
-            return menu;
+            menuRest.id = snapshot.key;
+            return menuRest;
           }).toList());
     }
 
     return menusList;
   }
 
-  Future<int> update(Menu menu) async {
+  Future<int> update(MenuRest menuRest) async {
     // For filtering by key (ID), RegEx, greater than, and many other criteria,
     // we use a Finder.
-    final finder = Finder(filter: Filter.byKey(menu.id));
+    final finder = Finder(filter: Filter.byKey(menuRest.id));
     return await _menusStore.update(
       _sembastClient.database,
-      menu.toMap(),
+      menuRest.toMap(),
       finder: finder,
     );
   }
 
-  Future<int> delete(Menu menu) async {
-    final finder = Finder(filter: Filter.byKey(menu.id));
+  Future<int> delete(MenuRest menuRest) async {
+    final finder = Finder(filter: Filter.byKey(menuRest.id));
     return await _menusStore.delete(
       _sembastClient.database,
       finder: finder,

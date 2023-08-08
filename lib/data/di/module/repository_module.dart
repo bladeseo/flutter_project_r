@@ -8,7 +8,12 @@ import 'package:boilerplate/data/local/datasources/menu/menu_datasource.dart';
 import 'package:boilerplate/data/network/apis/menus/menu_api.dart';
 import 'package:boilerplate/data/repository/menu/menu_repository_impl_rest.dart';
 
+
 import 'package:boilerplate/data/repository/setting/setting_repository_impl.dart';
+
+import 'package:boilerplate/data/repository/menu/menu_repository_impl_local.dart';
+
+
 import 'package:boilerplate/data/repository/user/user_repository_impl.dart';
 import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
 
@@ -16,7 +21,12 @@ import 'package:boilerplate/domain/repository/post/post_repository.dart';
 
 import 'package:boilerplate/domain/repository/menu/menu_repository_rest.dart';
 
+
 import 'package:boilerplate/domain/repository/setting/setting_repository.dart';
+
+import 'package:boilerplate/domain/repository/menu/menu_repository_local.dart';
+
+
 import 'package:boilerplate/domain/repository/user/user_repository.dart';
 
 import '../../../di/service_locator.dart';
@@ -27,6 +37,11 @@ mixin RepositoryModule {
     getIt.registerSingleton<SettingRepository>(SettingRepositoryImpl(
       getIt<SharedPreferenceHelper>(),
     ));
+
+    getIt.registerSingleton<MenuRepositoryLocal>(MenuRepositoryImplLocal(
+      getIt<SharedPreferenceHelper>(),
+    ));
+
 
     getIt.registerSingleton<UserRepository>(UserRepositoryImpl(
       getIt<SharedPreferenceHelper>(),

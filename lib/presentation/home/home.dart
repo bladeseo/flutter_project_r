@@ -2,6 +2,9 @@ import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/di/service_locator.dart';
 
 import 'package:boilerplate/presentation/home/store/language/language_store.dart';
+
+import 'package:boilerplate/presentation/menu/store/menu_store_local.dart';
+
 import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
 
 import 'package:boilerplate/presentation/post/post_list.dart';
@@ -26,7 +29,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   //stores:---------------------------------------------------------------------
   final ThemeStore _themeStore = getIt<ThemeStore>();
+
+
   final LanguageStore _languageStore = getIt<LanguageStore>();
+
+  final MenuStoreLocal _menuStoreLocal = getIt<MenuStoreLocal>();
+
 
   int currentPageIndex = 0;
 

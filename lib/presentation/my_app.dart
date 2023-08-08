@@ -2,7 +2,11 @@ import 'package:boilerplate/constants/app_theme.dart';
 import 'package:boilerplate/constants/strings.dart';
 
 import 'package:boilerplate/presentation/home/home.dart';
+
 import 'package:boilerplate/presentation/home/store/language/language_store.dart';
+
+// import 'package:boilerplate/presentation/menu/store/menu_store_local.dart';
+
 import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
 
 import 'package:boilerplate/presentation/login/login.dart';
@@ -25,7 +29,11 @@ class MyApp extends StatelessWidget {
   // Create your store as a final variable in a base Widget. This works better
   // with Hot Reload than creating it directly in the `build` function.
   final ThemeStore _themeStore = getIt<ThemeStore>();
+
   final LanguageStore _languageStore = getIt<LanguageStore>();
+
+  // final MenuStoreLocal _menuStoreLocal = getIt<MenuStoreLocal>();
+
   final UserStore _userStore = getIt<UserStore>();
 
   @override

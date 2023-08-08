@@ -62,7 +62,7 @@ abstract class _MenuStoreLocal with Store {
   }
 
   @action
-  String? getTitle() {
+  String? getLanguage() {
     return supportedLanguages[supportedLanguages
             .indexWhere((language) => language.locale == _locale)]
         .language;

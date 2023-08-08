@@ -7,6 +7,9 @@ import 'package:boilerplate/core/widgets/progress_indicator_widget.dart';
 import 'package:boilerplate/core/widgets/rounded_button_widget.dart';
 import 'package:boilerplate/core/widgets/textfield_widget.dart';
 import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
+
+import 'package:boilerplate/presentation/home/store/language/language_store.dart';
+
 import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
 import 'package:boilerplate/presentation/login/store/login_store.dart';
 import 'package:boilerplate/utils/device/device_utils.dart';
@@ -29,6 +32,8 @@ class RouletteScreen extends StatefulWidget {
 }
 
 class _RouletteScreenState extends State<RouletteScreen> {
+  final LanguageStore _languageStore = getIt<LanguageStore>();
+
   //text controllers:-----------------------------------------------------------
   TextEditingController _userEmailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -113,6 +118,10 @@ class _RouletteScreenState extends State<RouletteScreen> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            TextButton(
+              onPressed: _changeRotation,
+              child: new Text('language : ' + _languageStore.locale.toString()),
+            ),
             ElevatedButton(
               onPressed: _changeRotation,
               child: new Text('Rotate : ' + (currTurns - prevTurns).toString()),

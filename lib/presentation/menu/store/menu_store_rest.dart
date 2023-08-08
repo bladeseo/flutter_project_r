@@ -3,7 +3,7 @@ import 'package:boilerplate/core/stores/error/error_store.dart';
 import 'package:boilerplate/utils/dio/dio_error_util.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:boilerplate/domain/entity/menu/menu_list.dart';
+import 'package:boilerplate/domain/entity/menu/menu_rest_list.dart';
 import '../../../domain/usecase/menu/get_menu_usecase.dart';
 
 part 'menu_store_rest.g.dart'; // 네이밍 변경시 맞춰서 바꿔줄 것

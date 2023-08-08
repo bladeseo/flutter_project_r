@@ -1,10 +1,10 @@
-import 'package:boilerplate/domain/entity/menu/menu.dart';
+import 'package:boilerplate/domain/entity/menu/menu_rest.dart';
 
 class MenuList {
   final int? total;
 
   final List<dynamic>? jsonProducts;
-  final List<Menu>? menus;
+  final List<MenuRest>? menus;
 
   MenuList({
     this.total,
@@ -16,7 +16,7 @@ class MenuList {
   // String -> dynamic (json obj.) 로 매핑하겠다는 의미인 듯
   factory MenuList.fromJson(Map<String, dynamic> json) {
     int total = 0;
-    List<Menu> menus = <Menu>[];
+    List<MenuRest> menus = <MenuRest>[];
 
     total = json['total'];
 
@@ -31,7 +31,7 @@ class MenuList {
     print('jsonProducts : ');
     print(jsonProducts);
 
-    menus = jsonProducts.map((menu) => Menu.fromMap(menu)).toList();
+    menus = jsonProducts.map((menuRest) => MenuRest.fromMap(menuRest)).toList();
 
 
 

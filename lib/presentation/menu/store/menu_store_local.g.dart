@@ -58,11 +58,11 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   }
 
   @override
-  String? getTitle() {
+  String? getLanguage() {
     final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
-        name: '_MenuStoreLocal.getTitle');
+        name: '_MenuStoreLocal.getLanguage');
     try {
-      return super.getTitle();
+      return super.getLanguage();
     } finally {
       _$_MenuStoreLocalActionController.endAction(_$actionInfo);
     }

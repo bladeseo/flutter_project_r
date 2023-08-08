@@ -5,8 +5,8 @@ import 'package:boilerplate/data/local/constants/db_constants.dart';
 import 'package:boilerplate/data/local/datasources/menu/menu_datasource.dart';
 
 import 'package:boilerplate/data/network/apis/menus/menu_api.dart';
-import 'package:boilerplate/domain/entity/menu/menu.dart';
-import 'package:boilerplate/domain/entity/menu/menu_list.dart';
+import 'package:boilerplate/domain/entity/menu/menu_rest.dart';
+import 'package:boilerplate/domain/entity/menu/menu_rest_list.dart';
 import 'package:boilerplate/domain/repository/menu/menu_repository_rest.dart';
 
 import 'package:sembast/sembast.dart';
@@ -37,7 +37,7 @@ class MenuRepositoryImplRest extends MenuRepositoryRest {
   }
 
   @override
-  Future<List<Menu>> findMenuById(int id) {
+  Future<List<MenuRest>> findMenuById(int id) {
     //creating filter
     List<Filter> filters = [];
 
@@ -53,19 +53,19 @@ class MenuRepositoryImplRest extends MenuRepositoryRest {
   }
 
   @override
-  Future<int> insert(Menu menu) => _menuDataSource
+  Future<int> insert(MenuRest menu) => _menuDataSource
       .insert(menu)
       .then((id) => id)
       .catchError((error) => throw error);
 
   @override
-  Future<int> update(Menu menu) => _menuDataSource
+  Future<int> update(MenuRest menu) => _menuDataSource
       .update(menu)
       .then((id) => id)
       .catchError((error) => throw error);
 
   @override
-  Future<int> delete(Menu menu) => _menuDataSource
+  Future<int> delete(MenuRest menu) => _menuDataSource
       .update(menu)
       .then((id) => id)
       .catchError((error) => throw error);

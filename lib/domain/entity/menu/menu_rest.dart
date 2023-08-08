@@ -1,12 +1,12 @@
 // https://dummyjson.com/carts
-class Menu {
+class MenuRest {
   // int? userId;
   int? id;
   String? title;
   int? price;
   // String? body;
 
-  Menu({
+  MenuRest({
     // this.userId,
     this.id,
     this.title,
@@ -14,7 +14,7 @@ class Menu {
     // this.body,
   });
 
-  factory Menu.fromMap(Map<String, dynamic> json) => Menu(
+  factory MenuRest.fromMap(Map<String, dynamic> json) => MenuRest(
         // userId: json["userId"],
         id: json["id"],
         title: json["title"],

@@ -4,7 +4,7 @@ import 'package:boilerplate/core/data/network/dio/dio_client.dart';
 import 'package:boilerplate/data/network/constants/endpoints.dart';
 import 'package:boilerplate/data/network/rest_client.dart';
 
-import 'package:boilerplate/domain/entity/menu/menu_list.dart';
+import 'package:boilerplate/domain/entity/menu/menu_rest_list.dart';
 
 class MenuApi {
   // dio instance
