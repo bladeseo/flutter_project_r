@@ -72,8 +72,16 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
         child: Stack(
           // overflow: Overflow.visible,
           children: <Widget>[
-            _buildUserIdField(),
-            _buildListView()
+            Container(
+                padding: const EdgeInsets.all(5.0),
+                alignment: Alignment.bottomCenter,
+                child: _buildUserIdField()
+            ),
+            Container(
+                padding: const EdgeInsets.all(5.0),
+                alignment: Alignment.bottomCenter,
+                child: _buildListView()
+            ),
           ],
         ),
     );
@@ -182,8 +190,8 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       builder: (context) {
         return TextFieldWidget(
           hint: AppLocalizations.of(context).translate('login_et_user_email'),
-          inputType: TextInputType.emailAddress,
-          icon: Icons.person,
+          inputType: TextInputType.text, // TextInputType.emailAddress,
+          icon: Icons.new_label, // .person,
           iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
           textController: _userEmailController,
           inputAction: TextInputAction.next,
@@ -225,5 +233,15 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
     });
 
     return SizedBox.shrink();
+  }
+
+
+  @override
+  void dispose() {
+    // Clean up the controller when the Widget is removed from the Widget tree
+    _userEmailController.dispose();
+    // _passwordController.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
   }
 }
