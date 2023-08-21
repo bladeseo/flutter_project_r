@@ -15,6 +15,20 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   String get locale => (_$localeComputed ??=
           Computed<String>(() => super.locale, name: '_MenuStoreLocal.locale'))
       .value;
+  Computed<int>? _$current_menu_idComputed;
+
+  @override
+  int get current_menu_id =>
+      (_$current_menu_idComputed ??= Computed<int>(() => super.current_menu_id,
+              name: '_MenuStoreLocal.current_menu_id'))
+          .value;
+  Computed<MenuItemLocal>? _$current_menuComputed;
+
+  @override
+  MenuItemLocal get current_menu => (_$current_menuComputed ??=
+          Computed<MenuItemLocal>(() => super.current_menu,
+              name: '_MenuStoreLocal.current_menu'))
+      .value;
 
   late final _$_localeAtom =
       Atom(name: '_MenuStoreLocal._locale', context: context);
@@ -29,6 +43,38 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   set _locale(String value) {
     _$_localeAtom.reportWrite(value, super._locale, () {
       super._locale = value;
+    });
+  }
+
+  late final _$_current_menu_idAtom =
+      Atom(name: '_MenuStoreLocal._current_menu_id', context: context);
+
+  @override
+  int get _current_menu_id {
+    _$_current_menu_idAtom.reportRead();
+    return super._current_menu_id;
+  }
+
+  @override
+  set _current_menu_id(int value) {
+    _$_current_menu_idAtom.reportWrite(value, super._current_menu_id, () {
+      super._current_menu_id = value;
+    });
+  }
+
+  late final _$_current_menuAtom =
+      Atom(name: '_MenuStoreLocal._current_menu', context: context);
+
+  @override
+  MenuItemLocal get _current_menu {
+    _$_current_menuAtom.reportRead();
+    return super._current_menu;
+  }
+
+  @override
+  set _current_menu(MenuItemLocal value) {
+    _$_current_menuAtom.reportWrite(value, super._current_menu, () {
+      super._current_menu = value;
     });
   }
 
@@ -47,6 +93,28 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   }
 
   @override
+  int getCurrentMenuId() {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.getCurrentMenuId');
+    try {
+      return super.getCurrentMenuId();
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeCurrentMenu(int menuId, bool use) {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.changeCurrentMenu');
+    try {
+      return super.changeCurrentMenu(menuId, use);
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String getCode() {
     final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
         name: '_MenuStoreLocal.getCode');
@@ -58,11 +126,11 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   }
 
   @override
-  String? getLanguage() {
+  String? getMenuItemLocalList() {
     final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
-        name: '_MenuStoreLocal.getLanguage');
+        name: '_MenuStoreLocal.getMenuItemLocalList');
     try {
-      return super.getLanguage();
+      return super.getMenuItemLocalList();
     } finally {
       _$_MenuStoreLocalActionController.endAction(_$actionInfo);
     }
@@ -71,7 +139,9 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   @override
   String toString() {
     return '''
-locale: ${locale}
+locale: ${locale},
+current_menu_id: ${current_menu_id},
+current_menu: ${current_menu}
     ''';
   }
 }

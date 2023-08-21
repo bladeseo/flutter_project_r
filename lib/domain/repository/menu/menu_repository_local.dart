@@ -10,4 +10,6 @@ abstract class MenuRepositoryLocal {
   Future<void> changeTitle(String value);
 
   String? get currentTitle;
+
+  Future<void> changeCurrentMenu(int menuId, bool use);
 }

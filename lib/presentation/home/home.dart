@@ -9,7 +9,8 @@ import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
 
 import 'package:boilerplate/presentation/post/post_list.dart';
 
-import 'package:boilerplate/presentation/menu/menu_list_rest.dart';
+// import 'package:boilerplate/presentation/menu/menu_list_rest.dart';
+import 'package:boilerplate/presentation/menu/menu_list_local.dart';
 
 import 'package:boilerplate/presentation/roulette/roulette.dart';
 import 'package:boilerplate/presentation/login/login.dart';
@@ -34,6 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final LanguageStore _languageStore = getIt<LanguageStore>();
 
   final MenuStoreLocal _menuStoreLocal = getIt<MenuStoreLocal>();
+
+
+  final _formKey = GlobalKey<FormState>();
 
 
   int currentPageIndex = 0;
@@ -68,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: <Widget>[
         Container(
-          child: RouletteScreen(),
+          child: MenuListScreenLocal(),
           // child: MenuListScreenRest(),
           // child: PostListScreen(),
 
@@ -111,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildThemeButton() {
+    // Wrapping in the Observer will automatically re-render on changes to counter.value
     return Observer(
       builder: (context) {
         return IconButton(
@@ -206,4 +211,5 @@ class _HomeScreenState extends State<HomeScreen> {
       // The value passed to Navigator.pop() or null.
     });
   }
+
 }

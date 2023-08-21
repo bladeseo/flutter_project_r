@@ -1,5 +1,7 @@
 import 'package:boilerplate/core/stores/error/error_store.dart';
-import 'package:boilerplate/domain/entity/language/Language.dart';
+
+// import 'package:boilerplate/domain/entity/language/Language.dart';
+import 'package:boilerplate/domain/entity/menu/menu_item_local.dart';
 
 import 'package:boilerplate/domain/repository/menu/menu_repository_local.dart';
 import 'package:mobx/mobx.dart';
@@ -18,11 +20,11 @@ abstract class _MenuStoreLocal with Store {
   final ErrorStore errorStore;
 
   // supported languages
-  List<Language> supportedLanguages = [
-    Language(code: 'KR', locale: 'ko', language: 'Korean'),
-    Language(code: 'US', locale: 'en', language: 'English'),
-    Language(code: 'DK', locale: 'da', language: 'Danish'),
-    Language(code: 'ES', locale: 'es', language: 'España'),
+  List<MenuItemLocal> menuItemLocalList = [
+    MenuItemLocal(id: 1, code: 'KR', locale: 'ko', language: 'Korean', use: true),
+    MenuItemLocal(id: 2, code: 'US', locale: 'en', language: 'English', use: true),
+    MenuItemLocal(id: 3, code: 'DK', locale: 'da', language: 'Danish', use: false),
+    MenuItemLocal(id: 4, code: 'ES', locale: 'es', language: 'España', use: true),
   ];
 
   // constructor:---------------------------------------------------------------
@@ -37,6 +39,19 @@ abstract class _MenuStoreLocal with Store {
   @computed
   String get locale => _locale;
 
+
+  @observable
+  int _current_menu_id = 0;
+
+  @computed
+  int get current_menu_id => _current_menu_id;
+
+  @observable
+  MenuItemLocal _current_menu = MenuItemLocal(id: 0, code: '', locale: '', language: '', use: false);
+
+  @computed
+  MenuItemLocal get current_menu => _current_menu;
+
   // actions:-------------------------------------------------------------------
   @action
   void changeTitle(String value) {
@@ -44,6 +59,31 @@ abstract class _MenuStoreLocal with Store {
     _repository.changeTitle(value).then((_) {
       // write additional logic here
     });
+  }
+
+  @action
+  int getCurrentMenuId() {
+    return _current_menu_id;
+  }
+
+  @action
+  void changeCurrentMenu(int menuId, bool use) {
+    print('@ changeCurrentMenu()');
+    print('menuId : ' + menuId.toString());
+    print('use : ' + use.toString());
+
+    _current_menu_id = menuId;
+    _current_menu = menuItemLocalList[menuId];
+
+    _current_menu.use = use;
+
+
+    menuItemLocalList[menuId].use = use;
+    /*
+    _repository.changeCurrentMenu(menuId, use).then((_) {
+      // write additional logic here
+    });
+    */
   }
 
   @action
@@ -62,8 +102,8 @@ abstract class _MenuStoreLocal with Store {
   }
 
   @action
-  String? getLanguage() {
-    return supportedLanguages[supportedLanguages
+  String? getMenuItemLocalList() {
+    return menuItemLocalList[menuItemLocalList
             .indexWhere((language) => language.locale == _locale)]
         .language;
   }

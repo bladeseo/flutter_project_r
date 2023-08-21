@@ -25,4 +25,9 @@ class MenuRepositoryImplLocal extends MenuRepositoryLocal {
 
   @override
   String? get currentTitle => _sharedPrefsHelper.currentTitle;
+
+
+  @override
+  Future<void> changeCurrentMenu(int menuId, bool use) =>
+      _sharedPrefsHelper.changeCurrentMenu(menuId, use);
 }

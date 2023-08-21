@@ -67,4 +67,8 @@ class SharedPreferenceHelper {
   Future<void> changeTitle(String title) {
     return _sharedPreference.setString(Preferences.current_title, title);
   }
+
+  Future<void> changeCurrentMenu(int menuId, bool use) {
+    return _sharedPreference.setString(Preferences.current_title, menuId.toString());
+  }
 }
