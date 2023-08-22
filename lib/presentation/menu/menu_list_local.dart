@@ -56,13 +56,25 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   }
 
   // body methods:--------------------------------------------------------------
+  // BuildContext context
   Widget _buildBody() {
-    return Stack(
-      children: <Widget>[
-        _handleErrorMessage(),
-        _buildMainContent(),
-      ],
+    
+    // Material 추가
+    return Material(
+      child: Stack(
+          children: <Widget>[
+            _handleErrorMessage(),
+            _buildMainContent(),
+          ],
+      ),
     );
+
+    // return Stack(
+    //   children: <Widget>[
+    //     _handleErrorMessage(),
+    //     _buildMainContent(),
+    //   ],
+    // );
   }
 
   Widget _buildMainContent() {
@@ -72,16 +84,18 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
         child: Stack(
           // overflow: Overflow.visible,
           children: <Widget>[
-            Container(
-                padding: const EdgeInsets.all(5.0),
-                alignment: Alignment.bottomCenter,
-                child: _buildUserIdField()
-            ),
+            // layer 순서 때문에 아래에 깔리면 클릭이 안 되는 듯 -_-;
             Container(
                 padding: const EdgeInsets.all(5.0),
                 alignment: Alignment.bottomCenter,
                 child: _buildListView()
             ),
+            Container(
+                padding: const EdgeInsets.all(5.0),
+                alignment: Alignment.bottomCenter,
+                child: _buildUserIdField()
+            ),
+
           ],
         ),
     );
