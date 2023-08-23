@@ -58,14 +58,14 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   // body methods:--------------------------------------------------------------
   // BuildContext context
   Widget _buildBody() {
-    
+
     // Material 추가
     return Material(
       child: Stack(
-          children: <Widget>[
-            _handleErrorMessage(),
-            _buildMainContent(),
-          ],
+        children: <Widget>[
+          _handleErrorMessage(),
+          _buildMainContent(),
+        ],
       ),
     );
 
@@ -78,28 +78,63 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   }
 
   Widget _buildMainContent() {
-    return Material(
-        // child: _buildListView()
-
-        child: Stack(
-          // overflow: Overflow.visible,
-          children: <Widget>[
-            // layer 순서 때문에 아래에 깔리면 클릭이 안 되는 듯 -_-;
-            Container(
+    return Column(
+        // overflow: Overflow.visible,
+        children: <Widget>[
+          Expanded(
+              flex: 3,
+              child: Container(
+                // width: 250,
+                // height: 250,
+                  color: Colors.amberAccent,
+                  padding: const EdgeInsets.all(5.0),
+                  // alignment: Alignment.bottomCenter,
+                  child: _buildUserIdField()
+              )
+          ),
+          Expanded(
+            flex: 7,
+            child: Container(
+              // width: 100,
+              // height: 300,
+                color: Colors.redAccent,
                 padding: const EdgeInsets.all(5.0),
-                alignment: Alignment.bottomCenter,
+                // alignment: Alignment.bottomCenter,
                 child: _buildListView()
-            ),
-            Container(
-                padding: const EdgeInsets.all(5.0),
-                alignment: Alignment.bottomCenter,
-                child: _buildUserIdField()
-            ),
+            )
+          ),
 
-          ],
-        ),
-    );
-    
+        //
+        // // layer 순서 때문에 아래에 깔리면 클릭이 안 되는 듯 -_-;
+        //   FractionallySizedBox(
+        //         widthFactor: 0.9,
+        //         heightFactor: 0.5,
+        //         child: Container(
+        //             // width: 100,
+        //             // height: 300,
+        //             color: Colors.redAccent,
+        //             padding: const EdgeInsets.all(5.0),
+        //             // alignment: Alignment.bottomCenter,
+        //             child: _buildListView()
+        //         )
+        //     ),
+        //
+        //     Positioned( //<-- SEE HERE
+        //       right: 0,
+        //       top: 255,
+        //       child: Container(
+        //           width: 250,
+        //           height: 250,
+        //           color: Colors.amberAccent,
+        //           padding: const EdgeInsets.all(5.0),
+        //           // alignment: Alignment.bottomCenter,
+        //           child: _buildUserIdField()
+        //       ),
+        //     )
+
+        ],
+      );
+
     // 일단은 Observer 사용 불필요
     /*
     return Observer(
@@ -116,19 +151,19 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   Widget _buildListView() {
     return _menuStoreLocal.menuItemLocalList != null
         ? ListView.separated(
-            itemCount: _menuStoreLocal.menuItemLocalList!.length,
-            separatorBuilder: (context, position) {
-              return Divider();
-            },
-            itemBuilder: (context, position) {
-              return _buildListItem(position);
-            },
-          )
+      itemCount: _menuStoreLocal.menuItemLocalList!.length,
+      separatorBuilder: (context, position) {
+        return Divider();
+      },
+      itemBuilder: (context, position) {
+        return _buildListItem(position);
+      },
+    )
         : Center(
-            child: Text(
-              AppLocalizations.of(context).translate('home_tv_no_menu_found'),
-            ),
-          );
+      child: Text(
+        AppLocalizations.of(context).translate('home_tv_no_menu_found'),
+      ),
+    );
   }
 
   Widget _buildListItem(int position) {
