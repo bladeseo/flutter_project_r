@@ -115,6 +115,17 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   }
 
   @override
+  void changeMenuLanguage(int menuId, String value) {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.changeMenuLanguage');
+    try {
+      return super.changeMenuLanguage(menuId, value);
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String getCode() {
     final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
         name: '_MenuStoreLocal.getCode');

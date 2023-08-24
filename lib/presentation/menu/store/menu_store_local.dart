@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:boilerplate/core/stores/error/error_store.dart';
 
 // import 'package:boilerplate/domain/entity/language/Language.dart';
@@ -20,12 +22,26 @@ abstract class _MenuStoreLocal with Store {
   final ErrorStore errorStore;
 
   // supported languages
-  List<MenuItemLocal> menuItemLocalList = [
-    MenuItemLocal(id: 1, code: 'KR', locale: 'ko', language: 'Korean', use: true),
-    MenuItemLocal(id: 2, code: 'US', locale: 'en', language: 'English', use: true),
-    MenuItemLocal(id: 3, code: 'DK', locale: 'da', language: 'Danish', use: false),
-    MenuItemLocal(id: 4, code: 'ES', locale: 'es', language: 'España', use: true),
-  ];
+  // List<MenuItemLocal> menuItemLocalList = [
+  //   MenuItemLocal(id: 1, code: 'KR', locale: 'ko', language: 'Korean', use: true),
+  //   MenuItemLocal(id: 2, code: 'US', locale: 'en', language: 'English', use: true),
+  //   MenuItemLocal(id: 3, code: 'DK', locale: 'da', language: 'Danish', use: false),
+  //   MenuItemLocal(id: 4, code: 'ES', locale: 'es', language: 'España', use: true),
+  // ];
+
+  @observable
+  ObservableList<MenuItemLocal> menuItemLocalList = <MenuItemLocal>[].asObservable();
+
+  // @observable
+  // ListView listViewMenuItemLocal;
+
+  @action
+  void listMenuItemLocal() {
+    menuItemLocalList.add(MenuItemLocal(id: 1, code: 'KR', locale: 'ko', language: 'Korean', use: true));
+    menuItemLocalList.add(MenuItemLocal(id: 2, code: 'US', locale: 'en', language: 'English', use: true));
+    menuItemLocalList.add(MenuItemLocal(id: 3, code: 'DK', locale: 'da', language: 'Danish', use: false));
+    menuItemLocalList.add(MenuItemLocal(id: 4, code: 'ES', locale: 'es', language: 'España', use: true));
+  }
 
   // constructor:---------------------------------------------------------------
   _MenuStoreLocal(this._repository, this.errorStore) {
@@ -69,6 +85,7 @@ abstract class _MenuStoreLocal with Store {
   @action
   void changeCurrentMenu(int menuId, bool use) {
     print('@ changeCurrentMenu()');
+    print('language : ' + menuItemLocalList[menuId].language.toString());
     print('menuId : ' + menuId.toString());
     print('use : ' + use.toString());
 
@@ -84,6 +101,19 @@ abstract class _MenuStoreLocal with Store {
       // write additional logic here
     });
     */
+  }
+
+  @action
+  void changeMenuLanguage(int menuId, String value) {
+    print('@ changeMenuLanguage()');
+    print('language : ' + menuItemLocalList[menuId].language.toString());
+    print('menuId : ' + menuId.toString());
+
+    _current_menu_id = menuId;
+    _current_menu = menuItemLocalList[menuId];
+
+
+    menuItemLocalList[menuId].language = value;
   }
 
   @action
@@ -114,6 +144,8 @@ abstract class _MenuStoreLocal with Store {
     if (_repository.currentTitle != null) {
       _locale = _repository.currentTitle!;
     }
+
+    listMenuItemLocal();
   }
 
   // dispose:-------------------------------------------------------------------

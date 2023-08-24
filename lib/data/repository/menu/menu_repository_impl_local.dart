@@ -30,4 +30,8 @@ class MenuRepositoryImplLocal extends MenuRepositoryLocal {
   @override
   Future<void> changeCurrentMenu(int menuId, bool use) =>
       _sharedPrefsHelper.changeCurrentMenu(menuId, use);
+
+  @override
+  Future<void> changeMenuLanguage(int menuId, String value) =>
+      _sharedPrefsHelper.changeMenuLanguage(menuId, value);
 }

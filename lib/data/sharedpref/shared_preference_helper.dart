@@ -71,4 +71,8 @@ class SharedPreferenceHelper {
   Future<void> changeCurrentMenu(int menuId, bool use) {
     return _sharedPreference.setString(Preferences.current_title, menuId.toString());
   }
+
+  Future<void> changeMenuLanguage(int menuId, String value) {
+    return _sharedPreference.setString(Preferences.current_language, value);
+  }
 }

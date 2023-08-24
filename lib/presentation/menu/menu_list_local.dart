@@ -3,6 +3,7 @@ import 'package:boilerplate/core/widgets/progress_indicator_widget.dart';
 import 'package:boilerplate/di/service_locator.dart';
 
 import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
+import 'package:boilerplate/presentation/login/store/login_store.dart';
 
 // import 'package:boilerplate/presentation/menu/store/menu_store_rest.dart';
 import 'package:boilerplate/presentation/menu/store/menu_store_local.dart';
@@ -11,8 +12,13 @@ import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'package:boilerplate/core/widgets/textfield_widget.dart';
 import 'package:boilerplate/core/stores/form/form_store.dart';
+
+import 'package:boilerplate/core/widgets/textfield_widget.dart';
+import 'package:boilerplate/core/widgets/rounded_button_widget.dart';
+
+import 'package:boilerplate/utils/device/device_utils.dart';
+
 
 class MenuListScreenLocal extends StatefulWidget {
   @override
@@ -22,13 +28,15 @@ class MenuListScreenLocal extends StatefulWidget {
 class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   //stores:---------------------------------------------------------------------
   final ThemeStore _themeStore = getIt<ThemeStore>();
+  final FormStore _formStore = getIt<FormStore>();
+  final UserStore _userStore = getIt<UserStore>();
 
   final MenuStoreLocal _menuStoreLocal = getIt<MenuStoreLocal>();
 
 
   TextEditingController _userEmailController = TextEditingController();
 
-  final FormStore _formStore = getIt<FormStore>();
+
 
   late FocusNode _passwordFocusNode;
 
@@ -78,62 +86,77 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   }
 
   Widget _buildMainContent() {
-    return Column(
-        // overflow: Overflow.visible,
-        children: <Widget>[
-          Expanded(
-              flex: 3,
-              child: Container(
-                // width: 250,
-                // height: 250,
-                  color: Colors.amberAccent,
-                  padding: const EdgeInsets.all(5.0),
-                  // alignment: Alignment.bottomCenter,
-                  child: _buildUserIdField()
-              )
-          ),
-          Expanded(
-            flex: 7,
-            child: Container(
-              // width: 100,
-              // height: 300,
-                color: Colors.redAccent,
-                padding: const EdgeInsets.all(5.0),
-                // alignment: Alignment.bottomCenter,
-                child: _buildListView()
-            )
-          ),
+    return Observer(
+        builder: (context) {
+          return Column(
+            // overflow: Overflow.visible,
+            children: <Widget>[
+              Expanded(
+                  flex: 2,
+                  child: Container(
+                    // width: 250,
+                    // height: 250,
+                      color: Colors.amberAccent,
+                      padding: const EdgeInsets.all(5.0),
+                      // alignment: Alignment.bottomCenter,
+                      child: _buildUserIdField()
+                  )
+              ),
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                    // width: 250,
+                    // height: 250,
+                      color: Colors.amberAccent,
+                      padding: const EdgeInsets.all(5.0),
+                      // alignment: Alignment.bottomCenter,
+                      child: _buildSignInButton()
+                  )
+              ),
+              Expanded(
+                  flex: 7,
+                  child: Container(
+                    // width: 100,
+                    // height: 300,
+                      color: Colors.redAccent,
+                      padding: const EdgeInsets.all(5.0),
+                      // alignment: Alignment.bottomCenter,
+                      child: _buildListView()
+                  )
+              ),
 
-        //
-        // // layer 순서 때문에 아래에 깔리면 클릭이 안 되는 듯 -_-;
-        //   FractionallySizedBox(
-        //         widthFactor: 0.9,
-        //         heightFactor: 0.5,
-        //         child: Container(
-        //             // width: 100,
-        //             // height: 300,
-        //             color: Colors.redAccent,
-        //             padding: const EdgeInsets.all(5.0),
-        //             // alignment: Alignment.bottomCenter,
-        //             child: _buildListView()
-        //         )
-        //     ),
-        //
-        //     Positioned( //<-- SEE HERE
-        //       right: 0,
-        //       top: 255,
-        //       child: Container(
-        //           width: 250,
-        //           height: 250,
-        //           color: Colors.amberAccent,
-        //           padding: const EdgeInsets.all(5.0),
-        //           // alignment: Alignment.bottomCenter,
-        //           child: _buildUserIdField()
-        //       ),
-        //     )
+              //
+              // // layer 순서 때문에 아래에 깔리면 클릭이 안 되는 듯 -_-;
+              //   FractionallySizedBox(
+              //         widthFactor: 0.9,
+              //         heightFactor: 0.5,
+              //         child: Container(
+              //             // width: 100,
+              //             // height: 300,
+              //             color: Colors.redAccent,
+              //             padding: const EdgeInsets.all(5.0),
+              //             // alignment: Alignment.bottomCenter,
+              //             child: _buildListView()
+              //         )
+              //     ),
+              //
+              //     Positioned( //<-- SEE HERE
+              //       right: 0,
+              //       top: 255,
+              //       child: Container(
+              //           width: 250,
+              //           height: 250,
+              //           color: Colors.amberAccent,
+              //           padding: const EdgeInsets.all(5.0),
+              //           // alignment: Alignment.bottomCenter,
+              //           child: _buildUserIdField()
+              //       ),
+              //     )
 
-        ],
-      );
+            ],
+          );
+        }
+    );
 
     // 일단은 Observer 사용 불필요
     /*
@@ -155,6 +178,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       separatorBuilder: (context, position) {
         return Divider();
       },
+
       itemBuilder: (context, position) {
         return _buildListItem(position);
       },
@@ -194,9 +218,13 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       ),
       value: _isUse,
       onChanged:(bool value) {
-        _menuStoreLocal.changeCurrentMenu(_pos, value);
+        // _menuStoreLocal.changeCurrentMenu(_pos, value);
 
-        print('curr. menu id : ' + _menuStoreLocal.getCurrentMenuId().toString());
+        _menuStoreLocal.changeMenuLanguage(_pos, _userEmailController.text);
+
+        print('_menuStoreLocal.changeMenuLanguage');
+
+        // print('curr. menu id : ' + _menuStoreLocal.getCurrentMenuId().toString());
 
         // print('curr. menu id : ' + _menuStoreLocal.get .getCurrentMenuId().toString());
 
@@ -253,6 +281,29 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
           },
           errorText: _formStore.formErrorStore.userEmail,
         );
+      },
+    );
+  }
+
+  Widget _buildSignInButton() {
+    return RoundedButtonWidget(
+      buttonText: AppLocalizations.of(context).translate('login_btn_sign_in'),
+      buttonColor: Colors.blueAccent, // .orangeAccent,
+      textColor: Colors.white,
+      onPressed: () async {
+        if (_formStore.canLogin) {
+          DeviceUtils.hideKeyboard(context);
+          _userStore.login(_userEmailController.text, _userEmailController.text); // _passwordController.text
+        } else {
+
+          // changeMenuLanguage
+
+          _menuStoreLocal.menuItemLocalList?[0].language = _userEmailController.text;
+
+          _showErrorMessage(_menuStoreLocal.menuItemLocalList[0].language.toString());
+
+          // _showErrorMessage('Please fill in all fields');
+        }
       },
     );
   }

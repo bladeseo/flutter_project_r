@@ -12,4 +12,6 @@ abstract class MenuRepositoryLocal {
   String? get currentTitle;
 
   Future<void> changeCurrentMenu(int menuId, bool use);
+
+  Future<void> changeMenuLanguage(int menuId, String value);
 }
