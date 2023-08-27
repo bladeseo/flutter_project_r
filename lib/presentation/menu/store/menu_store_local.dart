@@ -29,18 +29,37 @@ abstract class _MenuStoreLocal with Store {
   //   MenuItemLocal(id: 4, code: 'ES', locale: 'es', language: 'España', use: true),
   // ];
 
+  // supported languages
+  // @observable
+  // List<String> menuLanguageLocalList = [
+  //   'Korean',
+  //   'English',
+  //   'Danish',
+  //   'España',
+  // ].asObservable();
+
   @observable
-  ObservableList<MenuItemLocal> menuItemLocalList = <MenuItemLocal>[].asObservable();
+  ObservableList<String> menuLanguageLocalList = <String>['Korean', 'English', 'Danish'].asObservable();
+
+  @observable
+  ObservableList<bool> menuUseLocalList = <bool>[true, true, false].asObservable();
 
   // @observable
   // ListView listViewMenuItemLocal;
 
   @action
-  void listMenuItemLocal() {
-    menuItemLocalList.add(MenuItemLocal(id: 1, code: 'KR', locale: 'ko', language: 'Korean', use: true));
-    menuItemLocalList.add(MenuItemLocal(id: 2, code: 'US', locale: 'en', language: 'English', use: true));
-    menuItemLocalList.add(MenuItemLocal(id: 3, code: 'DK', locale: 'da', language: 'Danish', use: false));
-    menuItemLocalList.add(MenuItemLocal(id: 4, code: 'ES', locale: 'es', language: 'España', use: true));
+  List<String> listMenuLanguageLocal() {
+    // menuItemLocalList.add(MenuItemLocal(id: 1, code: 'KR', locale: 'ko', language: 'Korean', use: true));
+    // menuItemLocalList.add(MenuItemLocal(id: 2, code: 'US', locale: 'en', language: 'English', use: true));
+    // menuItemLocalList.add(MenuItemLocal(id: 3, code: 'DK', locale: 'da', language: 'Danish', use: false));
+    // menuItemLocalList.add(MenuItemLocal(id: 4, code: 'ES', locale: 'es', language: 'España', use: true));
+
+    return menuLanguageLocalList;
+  }
+
+  @action
+  List<bool> listMenuUseLocal() {
+    return menuUseLocalList;
   }
 
   // constructor:---------------------------------------------------------------
@@ -85,17 +104,18 @@ abstract class _MenuStoreLocal with Store {
   @action
   void changeCurrentMenu(int menuId, bool use) {
     print('@ changeCurrentMenu()');
-    print('language : ' + menuItemLocalList[menuId].language.toString());
+    print('language : ' + menuLanguageLocalList[menuId]);
     print('menuId : ' + menuId.toString());
     print('use : ' + use.toString());
 
     _current_menu_id = menuId;
-    _current_menu = menuItemLocalList[menuId];
+    // _current_menu = menuItemLocalList[menuId];
 
-    _current_menu.use = use;
+    // _current_menu.use = use;
 
 
-    menuItemLocalList[menuId].use = use;
+    // menuItemLocalList[menuId].use = use;
+
     /*
     _repository.changeCurrentMenu(menuId, use).then((_) {
       // write additional logic here
@@ -106,14 +126,14 @@ abstract class _MenuStoreLocal with Store {
   @action
   void changeMenuLanguage(int menuId, String value) {
     print('@ changeMenuLanguage()');
-    print('language : ' + menuItemLocalList[menuId].language.toString());
     print('menuId : ' + menuId.toString());
+    print('language : ' + value);
 
     _current_menu_id = menuId;
-    _current_menu = menuItemLocalList[menuId];
+    // _current_menu_language = menuLanguageLocalList[menuId];
 
 
-    menuItemLocalList[menuId].language = value;
+    menuLanguageLocalList[menuId] = value;
   }
 
   @action
@@ -131,12 +151,12 @@ abstract class _MenuStoreLocal with Store {
     return code;
   }
 
-  @action
-  String? getMenuItemLocalList() {
-    return menuItemLocalList[menuItemLocalList
-            .indexWhere((language) => language.locale == _locale)]
-        .language;
-  }
+  // @action
+  // String? getMenuItemLocalList() {
+  //   return menuItemLocalList[menuItemLocalList
+  //           .indexWhere((language) => language.locale == _locale)]
+  //       .language;
+  // }
 
   // general:-------------------------------------------------------------------
   void init() async {
@@ -145,7 +165,7 @@ abstract class _MenuStoreLocal with Store {
       _locale = _repository.currentTitle!;
     }
 
-    listMenuItemLocal();
+    // listMenuItemLocal();
   }
 
   // dispose:-------------------------------------------------------------------

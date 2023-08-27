@@ -171,34 +171,59 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
     */
   }
 
-  Widget _buildListView() {
-    return _menuStoreLocal.menuItemLocalList != null
-        ? ListView.separated(
-      itemCount: _menuStoreLocal.menuItemLocalList!.length,
-      separatorBuilder: (context, position) {
-        return Divider();
-      },
 
-      itemBuilder: (context, position) {
-        return _buildListItem(position);
-      },
-    )
-        : Center(
-      child: Text(
-        AppLocalizations.of(context).translate('home_tv_no_menu_found'),
-      ),
-    );
-  }
+  Widget _buildListView() {
+      return _menuStoreLocal.menuLanguageLocalList != null
+          ? ListView.separated(
+        itemCount: _menuStoreLocal.menuLanguageLocalList!.length,
+        separatorBuilder: (context, position) {
+          return Divider();
+        },
+
+        itemBuilder: (context, position) {
+          return _buildListItem(position);
+        },
+      )
+          : Center(
+        child: Text(
+          AppLocalizations.of(context).translate('home_tv_no_menu_found'),
+        ),
+      );
+    }
+
+
+  // Widget _buildListView() {
+  //   return _menuStoreLocal.menuItemLocalList != null
+  //       ? ListView.separated(
+  //     itemCount: _menuStoreLocal.menuItemLocalList!.length,
+  //     separatorBuilder: (context, position) {
+  //       return Divider();
+  //     },
+  //
+  //     itemBuilder: (context, position) {
+  //       return _buildListItem(position);
+  //     },
+  //   )
+  //       : Center(
+  //     child: Text(
+  //       AppLocalizations.of(context).translate('home_tv_no_menu_found'),
+  //     ),
+  //   );
+  // }
 
   Widget _buildListItem(int position) {
-    bool _isUse = _menuStoreLocal.menuItemLocalList?[position].use ?? false;
+    bool _isUse = _menuStoreLocal.menuUseLocalList?[position] ?? false;
+    // bool _isUse = _menuStoreLocal.listMenuItemLocal()?[position].use ?? false;
+
     int _pos = position;
 
     return SwitchListTile(
       dense: true,
       title: Text(
         // '${_menuStoreLocal.menuList?.menus?[position].id}',
-        '${_menuStoreLocal.menuItemLocalList?[position].language}',
+
+        '${_menuStoreLocal.menuLanguageLocalList?[position]}',
+        // '${_menuStoreLocal.listMenuItemLocal()?[position].language}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
@@ -211,7 +236,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       ),
       subtitle: Text(
         // '${_menuStoreLocal.menuList?.menus?[position].price}',
-        '${_menuStoreLocal.menuItemLocalList?[position].code}',
+
+        '${_menuStoreLocal.menuLanguageLocalList?[position]}',
+        // '${_menuStoreLocal.listMenuItemLocal()?[position].code}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
@@ -298,9 +325,11 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
           // changeMenuLanguage
 
-          _menuStoreLocal.menuItemLocalList?[0].language = _userEmailController.text;
+          // _menuStoreLocal.menuItemLocalList?[0].language = _userEmailController.text;
+          _menuStoreLocal.menuLanguageLocalList?[0] = _userEmailController.text;
 
-          _showErrorMessage(_menuStoreLocal.menuItemLocalList[0].language.toString());
+          // _showErrorMessage(_menuStoreLocal.menuItemLocalList[0].language.toString());
+          _showErrorMessage(_menuStoreLocal.menuLanguageLocalList[0]);
 
           // _showErrorMessage('Please fill in all fields');
         }

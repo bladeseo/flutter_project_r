@@ -6,6 +6,7 @@ abstract class MenuRepositoryLocal {
 
   bool get isUse;
 
+
   // Language: -----------------------------------------------------------------
   Future<void> changeTitle(String value);
 
