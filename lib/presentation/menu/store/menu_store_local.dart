@@ -44,6 +44,16 @@ abstract class _MenuStoreLocal with Store {
   @observable
   ObservableList<bool> menuUseLocalList = <bool>[true, true, false].asObservable();
 
+  @action
+  List<ObservableList<String>> getUpdatedMenuList() {
+    List<ObservableList<String>> list = [];
+    list.add(menuLanguageLocalList);
+    return list;
+  }
+
+  // menuList.add(menuLanguageLocalList);
+
+
   // @observable
   // ListView listViewMenuItemLocal;
 

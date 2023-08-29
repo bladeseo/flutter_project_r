@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormState>();
 
 
-  int currentPageIndex = 0;
+  int currentPageIndex = 0; // 하단 메뉴 default index
 
   @override
   Widget build(BuildContext context) {

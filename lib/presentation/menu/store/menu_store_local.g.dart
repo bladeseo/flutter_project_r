@@ -115,6 +115,17 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
       ActionController(name: '_MenuStoreLocal', context: context);
 
   @override
+  List<ObservableList<String>> getUpdatedMenuList() {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.getUpdatedMenuList');
+    try {
+      return super.getUpdatedMenuList();
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   List<String> listMenuLanguageLocal() {
     final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
         name: '_MenuStoreLocal.listMenuLanguageLocal');

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:boilerplate/core/widgets/progress_indicator_widget.dart';
 import 'package:boilerplate/di/service_locator.dart';
@@ -9,7 +11,6 @@ import 'package:boilerplate/presentation/login/store/login_store.dart';
 import 'package:boilerplate/presentation/menu/store/menu_store_local.dart';
 
 import 'package:boilerplate/utils/locale/app_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'package:boilerplate/core/stores/form/form_store.dart';
@@ -39,6 +40,34 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
 
   late FocusNode _passwordFocusNode;
+
+
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: Settings',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
 
   @override
@@ -88,6 +117,94 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   Widget _buildMainContent() {
     return Observer(
         builder: (context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('BottomNavigationBar Sample'),
+        ),
+
+        body: Column(
+          // overflow: Overflow.visible,
+          children: <Widget>[
+            Expanded(
+                flex: 2,
+                child: Container(
+                    // width: 250,
+                    // height: 250,
+                    color: Colors.amberAccent,
+                    padding: const EdgeInsets.all(5.0),
+                    // alignment: Alignment.bottomCenter,
+                    child: _buildUserIdField())),
+            Expanded(
+                flex: 1,
+                child: Container(
+                    // width: 250,
+                    // height: 250,
+                    color: Colors.amberAccent,
+                    padding: const EdgeInsets.all(5.0),
+                    // alignment: Alignment.bottomCenter,
+                    child: _buildSignInButton())),
+            Expanded(
+                flex: 6,
+                child: Container(
+                    // width: 100,
+                    // height: 300,
+                    color: Colors.redAccent,
+                    padding: const EdgeInsets.all(5.0),
+                    // alignment: Alignment.bottomCenter,
+                    child: _buildListView(_selectedIndex))),
+            Expanded(
+                flex: 1,
+                child: Container(
+                  // width: 100,
+                  // height: 300,
+                    color: Colors.redAccent,
+                    padding: const EdgeInsets.all(5.0),
+                    // alignment: Alignment.bottomCenter,
+                    child: _widgetOptions.elementAt(_selectedIndex))),
+          ],
+        ),
+
+        // body: Center(
+        //   child: _widgetOptions.elementAt(_selectedIndex),
+        // ),
+
+
+
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  // icon: Icon(Icons.home),
+                  icon: Text("home"),
+                  activeIcon: Text("home +"),
+                  label: 'home',
+                  backgroundColor: Colors.red,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.business),
+                  label: 'Business',
+                  backgroundColor: Colors.green,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.school),
+                  label: 'School',
+                  backgroundColor: Colors.purple,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.add),
+                  label: 'Settings',
+                  backgroundColor: Colors.pink,
+                ),
+              ],
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,
+            ),
+          );
+
+
+          /*
           return Column(
             // overflow: Overflow.visible,
             children: <Widget>[
@@ -124,37 +241,12 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                       child: _buildListView()
                   )
               ),
-
-              //
-              // // layer 순서 때문에 아래에 깔리면 클릭이 안 되는 듯 -_-;
-              //   FractionallySizedBox(
-              //         widthFactor: 0.9,
-              //         heightFactor: 0.5,
-              //         child: Container(
-              //             // width: 100,
-              //             // height: 300,
-              //             color: Colors.redAccent,
-              //             padding: const EdgeInsets.all(5.0),
-              //             // alignment: Alignment.bottomCenter,
-              //             child: _buildListView()
-              //         )
-              //     ),
-              //
-              //     Positioned( //<-- SEE HERE
-              //       right: 0,
-              //       top: 255,
-              //       child: Container(
-              //           width: 250,
-              //           height: 250,
-              //           color: Colors.amberAccent,
-              //           padding: const EdgeInsets.all(5.0),
-              //           // alignment: Alignment.bottomCenter,
-              //           child: _buildUserIdField()
-              //       ),
-              //     )
-
             ],
           );
+          */
+
+
+
         }
     );
 
@@ -172,7 +264,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   }
 
 
-  Widget _buildListView() {
+  Widget _buildListView(int index) {
+      print("index @ _buildListView : " + index.toString());
+
       return _menuStoreLocal.menuLanguageLocalList != null
           ? ListView.separated(
         itemCount: _menuStoreLocal.menuLanguageLocalList!.length,
