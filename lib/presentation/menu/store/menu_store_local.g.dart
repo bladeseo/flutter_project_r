@@ -30,36 +30,53 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
               name: '_MenuStoreLocal.current_menu'))
       .value;
 
-  late final _$menuLanguageLocalListAtom =
-      Atom(name: '_MenuStoreLocal.menuLanguageLocalList', context: context);
+  late final _$_menuLanguageLocalListAtom =
+      Atom(name: '_MenuStoreLocal._menuLanguageLocalList', context: context);
 
   @override
-  ObservableList<String> get menuLanguageLocalList {
-    _$menuLanguageLocalListAtom.reportRead();
-    return super.menuLanguageLocalList;
+  ObservableList<String> get _menuLanguageLocalList {
+    _$_menuLanguageLocalListAtom.reportRead();
+    return super._menuLanguageLocalList;
   }
 
   @override
-  set menuLanguageLocalList(ObservableList<String> value) {
-    _$menuLanguageLocalListAtom.reportWrite(value, super.menuLanguageLocalList,
-        () {
-      super.menuLanguageLocalList = value;
+  set _menuLanguageLocalList(ObservableList<String> value) {
+    _$_menuLanguageLocalListAtom
+        .reportWrite(value, super._menuLanguageLocalList, () {
+      super._menuLanguageLocalList = value;
     });
   }
 
-  late final _$menuUseLocalListAtom =
-      Atom(name: '_MenuStoreLocal.menuUseLocalList', context: context);
+  late final _$_menuLanguageDetailLocalListAtom = Atom(
+      name: '_MenuStoreLocal._menuLanguageDetailLocalList', context: context);
 
   @override
-  ObservableList<bool> get menuUseLocalList {
-    _$menuUseLocalListAtom.reportRead();
-    return super.menuUseLocalList;
+  ObservableList<String> get _menuLanguageDetailLocalList {
+    _$_menuLanguageDetailLocalListAtom.reportRead();
+    return super._menuLanguageDetailLocalList;
   }
 
   @override
-  set menuUseLocalList(ObservableList<bool> value) {
-    _$menuUseLocalListAtom.reportWrite(value, super.menuUseLocalList, () {
-      super.menuUseLocalList = value;
+  set _menuLanguageDetailLocalList(ObservableList<String> value) {
+    _$_menuLanguageDetailLocalListAtom
+        .reportWrite(value, super._menuLanguageDetailLocalList, () {
+      super._menuLanguageDetailLocalList = value;
+    });
+  }
+
+  late final _$_menuUseLocalListAtom =
+      Atom(name: '_MenuStoreLocal._menuUseLocalList', context: context);
+
+  @override
+  ObservableList<bool> get _menuUseLocalList {
+    _$_menuUseLocalListAtom.reportRead();
+    return super._menuUseLocalList;
+  }
+
+  @override
+  set _menuUseLocalList(ObservableList<bool> value) {
+    _$_menuUseLocalListAtom.reportWrite(value, super._menuUseLocalList, () {
+      super._menuUseLocalList = value;
     });
   }
 
@@ -137,11 +154,55 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   }
 
   @override
+  List<String> listMenuLanguageDetailLocal() {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.listMenuLanguageDetailLocal');
+    try {
+      return super.listMenuLanguageDetailLocal();
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   List<bool> listMenuUseLocal() {
     final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
         name: '_MenuStoreLocal.listMenuUseLocal');
     try {
       return super.listMenuUseLocal();
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addMenuLanguageLocal(String language) {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.addMenuLanguageLocal');
+    try {
+      return super.addMenuLanguageLocal(language);
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addMenuLanguageDetailLocal(String languageDetail) {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.addMenuLanguageDetailLocal');
+    try {
+      return super.addMenuLanguageDetailLocal(languageDetail);
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addMenuUseLocal(bool use) {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.addMenuUseLocal');
+    try {
+      return super.addMenuUseLocal(use);
     } finally {
       _$_MenuStoreLocalActionController.endAction(_$actionInfo);
     }
@@ -205,8 +266,6 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   @override
   String toString() {
     return '''
-menuLanguageLocalList: ${menuLanguageLocalList},
-menuUseLocalList: ${menuUseLocalList},
 locale: ${locale},
 current_menu_id: ${current_menu_id},
 current_menu: ${current_menu}

@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 
 import 'package:another_flushbar/flushbar_helper.dart';
@@ -34,7 +36,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
   final MenuStoreLocal _menuStoreLocal = getIt<MenuStoreLocal>();
 
-
+  TextEditingController _menuTitleController = TextEditingController();
   TextEditingController _userEmailController = TextEditingController();
 
 
@@ -133,7 +135,8 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                     color: Colors.amberAccent,
                     padding: const EdgeInsets.all(5.0),
                     // alignment: Alignment.bottomCenter,
-                    child: _buildUserIdField())),
+                    child: _buildLanguageTitleField())),
+                    // child: _buildUserIdField())),
             Expanded(
                 flex: 1,
                 child: Container(
@@ -142,7 +145,8 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                     color: Colors.amberAccent,
                     padding: const EdgeInsets.all(5.0),
                     // alignment: Alignment.bottomCenter,
-                    child: _buildSignInButton())),
+                    child: _buildItemAddButton())),
+                    // child: _buildSignInButton())),
             Expanded(
                 flex: 6,
                 child: Container(
@@ -267,9 +271,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   Widget _buildListView(int index) {
       print("index @ _buildListView : " + index.toString());
 
-      return _menuStoreLocal.menuLanguageLocalList != null
+      return _menuStoreLocal.listMenuLanguageLocal() != null
           ? ListView.separated(
-        itemCount: _menuStoreLocal.menuLanguageLocalList!.length,
+        itemCount: _menuStoreLocal.listMenuLanguageLocal()!.length,
         separatorBuilder: (context, position) {
           return Divider();
         },
@@ -306,7 +310,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   // }
 
   Widget _buildListItem(int position) {
-    bool _isUse = _menuStoreLocal.menuUseLocalList?[position] ?? false;
+    bool _isUse = _menuStoreLocal.listMenuUseLocal()?[position] ?? false;
     // bool _isUse = _menuStoreLocal.listMenuItemLocal()?[position].use ?? false;
 
     int _pos = position;
@@ -316,13 +320,14 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       title: Text(
         // '${_menuStoreLocal.menuList?.menus?[position].id}',
 
-        '${_menuStoreLocal.menuLanguageLocalList?[position]}',
+        '${_menuStoreLocal.listMenuLanguageLocal()?[position]}',
         // '${_menuStoreLocal.listMenuItemLocal()?[position].language}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
         // style: Theme.of(context).textTheme.titleMedium
         style: TextStyle(
+          fontSize: 20,
           color: _isUse
               ? Colors.white
               : Colors.black,
@@ -331,11 +336,14 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       subtitle: Text(
         // '${_menuStoreLocal.menuList?.menus?[position].price}',
 
-        '${_menuStoreLocal.menuLanguageLocalList?[position]}',
+        '${_menuStoreLocal.listMenuLanguageLocal()?[position]}',
         // '${_menuStoreLocal.listMenuItemLocal()?[position].code}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
+        style: TextStyle(
+          fontSize: 15
+        ),
       ),
       value: _isUse,
       onChanged:(bool value) {
@@ -383,6 +391,31 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   }
 
 
+
+  Widget _buildLanguageTitleField() {
+    return Observer(
+      builder: (context) {
+        return TextFieldWidget(
+          hint: AppLocalizations.of(context).translate('menu_title'),
+          inputType: TextInputType.text, // TextInputType.emailAddress,
+          icon: Icons.new_label, // .person,
+          iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
+          textController: _menuTitleController,
+          inputAction: TextInputAction.next,
+          autoFocus: false,
+          onChanged: (value) {
+            _formStore.setMenuTitle(_menuTitleController.text);
+          },
+          onFieldSubmitted: (value) {
+            FocusScope.of(context).requestFocus(_passwordFocusNode);
+          },
+          errorText: _formStore.formErrorStore.menuTitle,
+        );
+      },
+    );
+  }
+
+
   Widget _buildUserIdField() {
     return Observer(
       builder: (context) {
@@ -406,6 +439,33 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
     );
   }
 
+
+  Widget _buildItemAddButton() {
+    return RoundedButtonWidget(
+      buttonText: AppLocalizations.of(context).translate('menu_btn_item_add'),
+      buttonColor: Colors.blueAccent, // .orangeAccent,
+      textColor: Colors.white,
+      onPressed: () async {
+        if (_userEmailController.text.isDefinedAndNotNull && _userEmailController.text.isNotEmpty) {
+          // item 추가
+          _menuStoreLocal.addMenuLanguageLocal(_userEmailController.text.trim());
+          _menuStoreLocal.addMenuLanguageDetailLocal(_userEmailController.text.trim());
+          _menuStoreLocal.addMenuUseLocal(true);
+
+          // input clear
+          _userEmailController.text = "";
+
+          // notice
+          _showSuccessMessage("The item was added successfully.");
+
+        } else {
+
+          _showErrorMessage("Please input title");
+        }
+      },
+    );
+  }
+
   Widget _buildSignInButton() {
     return RoundedButtonWidget(
       buttonText: AppLocalizations.of(context).translate('login_btn_sign_in'),
@@ -420,10 +480,10 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
           // changeMenuLanguage
 
           // _menuStoreLocal.menuItemLocalList?[0].language = _userEmailController.text;
-          _menuStoreLocal.menuLanguageLocalList?[0] = _userEmailController.text;
+          _menuStoreLocal.listMenuLanguageLocal()?[0] = _userEmailController.text;
 
           // _showErrorMessage(_menuStoreLocal.menuItemLocalList[0].language.toString());
-          _showErrorMessage(_menuStoreLocal.menuLanguageLocalList[0]);
+          _showErrorMessage(_menuStoreLocal.listMenuLanguageLocal()[0]);
 
           // _showErrorMessage('Please fill in all fields');
         }
@@ -444,6 +504,20 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   }
 
   // General Methods:-----------------------------------------------------------
+  _showSuccessMessage(String message) {
+    Future.delayed(Duration(milliseconds: 0), () {
+      if (message.isNotEmpty) {
+        FlushbarHelper.createSuccess(
+          message: message,
+          title: AppLocalizations.of(context).translate('home_tv_success'),
+          duration: Duration(seconds: 3),
+        )..show(context);
+      }
+    });
+
+    return SizedBox.shrink();
+  }
+
   _showErrorMessage(String message) {
     Future.delayed(Duration(milliseconds: 0), () {
       if (message.isNotEmpty) {

@@ -22,6 +22,10 @@ abstract class _FormStore with Store {
 
   void _setupValidations() {
     _disposers = [
+      reaction((_) => menuTitle, validateMenuTitle),
+      // reaction((_) => menuTitleDetail, validateMenuTitleDetail),
+      // reaction((_) => menuUse, validateMenuUse),
+
       reaction((_) => userEmail, validateUserEmail),
       reaction((_) => password, validatePassword),
       reaction((_) => confirmPassword, validateConfirmPassword)
@@ -29,6 +33,16 @@ abstract class _FormStore with Store {
   }
 
   // store variables:-----------------------------------------------------------
+  @observable
+  String menuTitle = '';
+
+  @observable
+  String menuTitleDetail = '';
+
+  @observable
+  bool menuUse = true;
+
+
   @observable
   String userEmail = '';
 
@@ -58,6 +72,22 @@ abstract class _FormStore with Store {
 
   // actions:-------------------------------------------------------------------
   @action
+  void setMenuTitle(String value) {
+    menuTitle = value;
+  }
+
+  @action
+  void setMenuTitleDetail(String value) {
+    menuTitleDetail = value;
+  }
+
+  @action
+  void setMenuUse(bool value) {
+    menuUse = value;
+  }
+
+
+  @action
   void setUserId(String value) {
     userEmail = value;
   }
@@ -71,6 +101,17 @@ abstract class _FormStore with Store {
   void setConfirmPassword(String value) {
     confirmPassword = value;
   }
+
+
+  @action
+  void validateMenuTitle(String value) {
+    if (value.isEmpty) {
+      formErrorStore.menuTitle = "Menu title can't be empty";
+    } else {
+      formErrorStore.menuTitle = null;
+    }
+  }
+
 
   @action
   void validateUserEmail(String value) {
@@ -113,6 +154,8 @@ abstract class _FormStore with Store {
   }
 
   void validateAll() {
+    validateMenuTitle(menuTitle);
+
     validatePassword(password);
     validateUserEmail(userEmail);
   }
@@ -121,6 +164,16 @@ abstract class _FormStore with Store {
 class FormErrorStore = _FormErrorStore with _$FormErrorStore;
 
 abstract class _FormErrorStore with Store {
+  @observable
+  String? menuTitle;
+
+  @observable
+  String? menuTitleDetail;
+
+  @observable
+  String? menuUse;
+
+
   @observable
   String? userEmail;
 

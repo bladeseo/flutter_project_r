@@ -9,6 +9,7 @@
 
   "home_start": "Below are list of strings for home",
   "home_tv_posts": "Posts",
+  "home_tv_success": "Success",
   "home_tv_error": "Error",
   "home_tv_no_post_found": "No posts found",
   "home_tv_choose_language": "Choose Language",
@@ -18,6 +19,10 @@
   "home_tv_menus": "Menus",
   "home_tv_no_menu_found": "No menus found",
   "menu_end": "-------------------------------------------------------------------------------------",
+
+  "menu_title": "Enter menu title",
+  "menu_title_detail": "Enter menu title detail",
+  "menu_btn_item_add": "Add Item",
 
   "roulette_start": "roulette start",
   "roulette_btn_rotate": "rotate",

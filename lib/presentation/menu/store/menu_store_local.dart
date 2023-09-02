@@ -39,15 +39,18 @@ abstract class _MenuStoreLocal with Store {
   // ].asObservable();
 
   @observable
-  ObservableList<String> menuLanguageLocalList = <String>['Korean', 'English', 'Danish'].asObservable();
+  ObservableList<String> _menuLanguageLocalList = <String>['Korean', 'English', 'Danish'].asObservable();
 
   @observable
-  ObservableList<bool> menuUseLocalList = <bool>[true, true, false].asObservable();
+  ObservableList<String> _menuLanguageDetailLocalList = <String>['K Pop', 'Yankee', '덴마크 우유'].asObservable();
+
+  @observable
+  ObservableList<bool> _menuUseLocalList = <bool>[true, true, false].asObservable();
 
   @action
   List<ObservableList<String>> getUpdatedMenuList() {
     List<ObservableList<String>> list = [];
-    list.add(menuLanguageLocalList);
+    list.add(_menuLanguageLocalList);
     return list;
   }
 
@@ -57,6 +60,7 @@ abstract class _MenuStoreLocal with Store {
   // @observable
   // ListView listViewMenuItemLocal;
 
+
   @action
   List<String> listMenuLanguageLocal() {
     // menuItemLocalList.add(MenuItemLocal(id: 1, code: 'KR', locale: 'ko', language: 'Korean', use: true));
@@ -64,13 +68,36 @@ abstract class _MenuStoreLocal with Store {
     // menuItemLocalList.add(MenuItemLocal(id: 3, code: 'DK', locale: 'da', language: 'Danish', use: false));
     // menuItemLocalList.add(MenuItemLocal(id: 4, code: 'ES', locale: 'es', language: 'España', use: true));
 
-    return menuLanguageLocalList;
+    return _menuLanguageLocalList;
+  }
+
+  @action
+  List<String> listMenuLanguageDetailLocal() {
+    return _menuLanguageDetailLocalList;
   }
 
   @action
   List<bool> listMenuUseLocal() {
-    return menuUseLocalList;
+    return _menuUseLocalList;
   }
+
+
+  @action
+  void addMenuLanguageLocal(String language) {
+    _menuLanguageLocalList.add(language);
+  }
+
+  @action
+  void addMenuLanguageDetailLocal(String languageDetail) {
+    _menuLanguageDetailLocalList.add(languageDetail);
+  }
+
+  @action
+  void addMenuUseLocal(bool use) {
+    _menuUseLocalList.add(use);
+  }
+
+
 
   // constructor:---------------------------------------------------------------
   _MenuStoreLocal(this._repository, this.errorStore) {
@@ -114,7 +141,7 @@ abstract class _MenuStoreLocal with Store {
   @action
   void changeCurrentMenu(int menuId, bool use) {
     print('@ changeCurrentMenu()');
-    print('language : ' + menuLanguageLocalList[menuId]);
+    print('language : ' + _menuLanguageLocalList[menuId]);
     print('menuId : ' + menuId.toString());
     print('use : ' + use.toString());
 
@@ -143,7 +170,7 @@ abstract class _MenuStoreLocal with Store {
     // _current_menu_language = menuLanguageLocalList[menuId];
 
 
-    menuLanguageLocalList[menuId] = value;
+    _menuLanguageLocalList[menuId] = value;
   }
 
   @action
