@@ -446,14 +446,14 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       buttonColor: Colors.blueAccent, // .orangeAccent,
       textColor: Colors.white,
       onPressed: () async {
-        if (_userEmailController.text.isDefinedAndNotNull && _userEmailController.text.isNotEmpty) {
+        if (_menuTitleController.text.isDefinedAndNotNull && _menuTitleController.text.isNotEmpty) {
           // item 추가
-          _menuStoreLocal.addMenuLanguageLocal(_userEmailController.text.trim());
-          _menuStoreLocal.addMenuLanguageDetailLocal(_userEmailController.text.trim());
+          _menuStoreLocal.addMenuLanguageLocal(_menuTitleController.text.trim());
+          _menuStoreLocal.addMenuLanguageDetailLocal(_menuTitleController.text.trim());
           _menuStoreLocal.addMenuUseLocal(true);
 
           // input clear
-          _userEmailController.text = "";
+          _menuTitleController.text = "";
 
           // notice
           _showSuccessMessage("The item was added successfully.");
