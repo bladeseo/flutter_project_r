@@ -209,6 +209,17 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   }
 
   @override
+  void changeMenuUseLocal(int menuId, bool use) {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.changeMenuUseLocal');
+    try {
+      return super.changeMenuUseLocal(menuId, use);
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void changeTitle(String value) {
     final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
         name: '_MenuStoreLocal.changeTitle');

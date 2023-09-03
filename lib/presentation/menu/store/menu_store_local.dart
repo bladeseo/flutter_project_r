@@ -98,6 +98,19 @@ abstract class _MenuStoreLocal with Store {
   }
 
 
+  @action
+  void changeMenuUseLocal(int menuId, bool use) {
+    print('===== changeMenuUseLocal =====');
+
+    print('menuId : ' + menuId.toString());
+    print('use : ' + use.toString());
+
+    _menuUseLocalList[menuId] = use;
+
+    print('_menuUseLocalList : ' + _menuUseLocalList.toString());
+
+  }
+
 
   // constructor:---------------------------------------------------------------
   _MenuStoreLocal(this._repository, this.errorStore) {

@@ -44,7 +44,16 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   late FocusNode _passwordFocusNode;
 
 
-  int _selectedIndex = 0;
+  var _menuItemSelectedIndex;
+
+  void _menuItemOnItemTapped(int index) {
+    setState(() {
+      _menuItemSelectedIndex = index;
+    });
+  }
+
+
+  int _bottomNavBarSelectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
@@ -65,9 +74,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
     ),
   ];
 
-  void _onItemTapped(int index) {
+  void _bottomNavBarOnItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _bottomNavBarSelectedIndex = index;
     });
   }
 
@@ -155,7 +164,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                     color: Colors.redAccent,
                     padding: const EdgeInsets.all(5.0),
                     // alignment: Alignment.bottomCenter,
-                    child: _buildListView(_selectedIndex))),
+                    child: _buildListView(_bottomNavBarSelectedIndex))),
             Expanded(
                 flex: 1,
                 child: Container(
@@ -164,12 +173,12 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                     color: Colors.redAccent,
                     padding: const EdgeInsets.all(5.0),
                     // alignment: Alignment.bottomCenter,
-                    child: _widgetOptions.elementAt(_selectedIndex))),
+                    child: _widgetOptions.elementAt(_bottomNavBarSelectedIndex))),
           ],
         ),
 
         // body: Center(
-        //   child: _widgetOptions.elementAt(_selectedIndex),
+        //   child: _widgetOptions.elementAt(_bottomNavBarSelectedIndex),
         // ),
 
 
@@ -201,9 +210,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
               ],
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              currentIndex: _selectedIndex,
+              currentIndex: _bottomNavBarSelectedIndex,
               selectedItemColor: Colors.amber[800],
-              onTap: _onItemTapped,
+              onTap: _bottomNavBarOnItemTapped,
             ),
           );
 
@@ -310,64 +319,66 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   // }
 
   Widget _buildListItem(int position) {
-    bool _isUse = _menuStoreLocal.listMenuUseLocal()?[position] ?? false;
-    // bool _isUse = _menuStoreLocal.listMenuItemLocal()?[position].use ?? false;
-
     int _pos = position;
 
-    return SwitchListTile(
-      dense: true,
-      title: Text(
-        // '${_menuStoreLocal.menuList?.menus?[position].id}',
+    // bool _isUse = _menuStoreLocal.listMenuUseLocal()?[_pos] ?? false;
+    // bool _isUse = _menuStoreLocal.listMenuItemLocal()?[position].use ?? false;
 
-        '${_menuStoreLocal.listMenuLanguageLocal()?[position]}',
-        // '${_menuStoreLocal.listMenuItemLocal()?[position].language}',
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        softWrap: false,
-        // style: Theme.of(context).textTheme.titleMedium
-        style: TextStyle(
-          fontSize: 20,
-          color: _isUse
-              ? Colors.white
-              : Colors.black,
-        ),
-      ),
-      subtitle: Text(
-        // '${_menuStoreLocal.menuList?.menus?[position].price}',
+    return Observer(
+        builder: (context) {
 
-        '${_menuStoreLocal.listMenuLanguageLocal()?[position]}',
-        // '${_menuStoreLocal.listMenuItemLocal()?[position].code}',
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        softWrap: false,
-        style: TextStyle(
-          fontSize: 15
-        ),
-      ),
-      value: _isUse,
-      onChanged:(bool value) {
-        // _menuStoreLocal.changeCurrentMenu(_pos, value);
+          return SwitchListTile(
+            dense: true,
+            title: Text(
+              // '${_menuStoreLocal.menuList?.menus?[position].id}',
 
-        _menuStoreLocal.changeMenuLanguage(_pos, _userEmailController.text);
+              '${_menuStoreLocal.listMenuLanguageLocal()?[_pos]}',
+              // '${_menuStoreLocal.listMenuItemLocal()?[position].language}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              // style: Theme.of(context).textTheme.titleMedium
+              style: TextStyle(
+                fontSize: 20,
+                color: _menuStoreLocal.listMenuUseLocal()?[_pos] ?? false // _isUse
+                    ? Colors.white
+                    : Colors.black,
+              ),
+            ),
+            subtitle: Text(
+              // '${_menuStoreLocal.menuList?.menus?[position].price}',
 
-        print('_menuStoreLocal.changeMenuLanguage');
+              '${_menuStoreLocal.listMenuLanguageLocal()?[_pos]} : ' + '${_menuStoreLocal.listMenuUseLocal()?[_pos]}',
+              // '${_menuStoreLocal.listMenuItemLocal()?[position].code}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              style: TextStyle(
+                  fontSize: 15
+              ),
+            ),
+            value: _menuStoreLocal.listMenuUseLocal()?[_pos] ?? false, // _isUse
+            onChanged:(bool value) {
+              print('value : ' + value.toString());
 
-        // print('curr. menu id : ' + _menuStoreLocal.getCurrentMenuId().toString());
+              // _isUse = value;
+              _menuStoreLocal.changeMenuUseLocal(_pos, value);
 
-        // print('curr. menu id : ' + _menuStoreLocal.get .getCurrentMenuId().toString());
+              // 테마 변경 호출
+              // _themeStore.changeBrightnessToDark(!_themeStore.darkMode);
 
-        // 테마 변경 호출
-        // _themeStore.changeBrightnessToDark(!_themeStore.darkMode);
+              // setState(() {
+              //   _isUse = value;
+              //
+              // });
+            },
+            secondary: const Icon(Icons.lightbulb_outline),
+          );
 
-
-        // setState(() {
-        //   _isUse = value;
-        //
-        // });
-      },
-      secondary: const Icon(Icons.lightbulb_outline),
+        }
     );
+
+
 
     // return ListTile(
     //   dense: true,
