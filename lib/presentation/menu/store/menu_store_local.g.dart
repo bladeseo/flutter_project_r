@@ -80,6 +80,22 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
     });
   }
 
+  late final _$_showMenuAddFormAtom =
+      Atom(name: '_MenuStoreLocal._showMenuAddForm', context: context);
+
+  @override
+  bool get _showMenuAddForm {
+    _$_showMenuAddFormAtom.reportRead();
+    return super._showMenuAddForm;
+  }
+
+  @override
+  set _showMenuAddForm(bool value) {
+    _$_showMenuAddFormAtom.reportWrite(value, super._showMenuAddForm, () {
+      super._showMenuAddForm = value;
+    });
+  }
+
   late final _$_localeAtom =
       Atom(name: '_MenuStoreLocal._locale', context: context);
 
@@ -176,6 +192,17 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
   }
 
   @override
+  bool getShowMenuAddFormLocal() {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.getShowMenuAddFormLocal');
+    try {
+      return super.getShowMenuAddFormLocal();
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addMenuLanguageLocal(String language) {
     final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
         name: '_MenuStoreLocal.addMenuLanguageLocal');
@@ -203,6 +230,17 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
         name: '_MenuStoreLocal.addMenuUseLocal');
     try {
       return super.addMenuUseLocal(use);
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void toggleShowMenuAddForm() {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.toggleShowMenuAddForm');
+    try {
+      return super.toggleShowMenuAddForm();
     } finally {
       _$_MenuStoreLocalActionController.endAction(_$actionInfo);
     }

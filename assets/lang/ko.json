@@ -20,9 +20,9 @@
   "home_tv_no_menu_found": "등록된 메뉴가 없습니다.",
   "menu_end": "-------------------------------------------------------------------------------------",
 
-  "menu_title": "Enter menu title",
-  "menu_title_detail": "Enter menu title detail",
-  "menu_btn_item_add": "항목 추가",
+  "menu_title": "(필수) 메뉴명을 입력하세요",
+  "menu_title_detail": "(선택) 메뉴설명을 입력하세요",
+  "menu_btn_item_add": "메뉴 항목 추가",
 
   "roulette_start": "룰렛 시작욤",
   "roulette_btn_rotate": "돌리기",

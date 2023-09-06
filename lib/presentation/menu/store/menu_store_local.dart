@@ -60,6 +60,9 @@ abstract class _MenuStoreLocal with Store {
   // @observable
   // ListView listViewMenuItemLocal;
 
+  @observable
+  bool _showMenuAddForm = false;
+
 
   @action
   List<String> listMenuLanguageLocal() {
@@ -81,6 +84,11 @@ abstract class _MenuStoreLocal with Store {
     return _menuUseLocalList;
   }
 
+  @action
+  bool getShowMenuAddFormLocal() {
+    return _showMenuAddForm;
+  }
+
 
   @action
   void addMenuLanguageLocal(String language) {
@@ -95,6 +103,14 @@ abstract class _MenuStoreLocal with Store {
   @action
   void addMenuUseLocal(bool use) {
     _menuUseLocalList.add(use);
+  }
+
+
+  @action
+  void toggleShowMenuAddForm() {
+    _showMenuAddForm = !_showMenuAddForm;
+
+    print('_showMenuAddForm : ' + _showMenuAddForm.toString());
   }
 
 

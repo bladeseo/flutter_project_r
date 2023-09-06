@@ -37,6 +37,8 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   final MenuStoreLocal _menuStoreLocal = getIt<MenuStoreLocal>();
 
   TextEditingController _menuTitleController = TextEditingController();
+  TextEditingController _menuTitleDetailController = TextEditingController();
+
   TextEditingController _userEmailController = TextEditingController();
 
 
@@ -50,6 +52,20 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
     setState(() {
       _menuItemSelectedIndex = index;
     });
+  }
+
+  bool _visible = false; //  _menuStoreLocal.getShowMenuAddFormLocal();
+  // print('_visible : ' + _visible.toString());
+
+
+  void _toggleShowMenuAddForm() {
+    _menuStoreLocal.toggleShowMenuAddForm();
+
+    setState(() {
+      _visible = _menuStoreLocal.getShowMenuAddFormLocal();
+    });
+
+    print('menu add button click : ' + _visible.toString());
   }
 
 
@@ -128,135 +144,161 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   Widget _buildMainContent() {
     return Observer(
         builder: (context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('BottomNavigationBar Sample'),
-        ),
-
-        body: Column(
-          // overflow: Overflow.visible,
-          children: <Widget>[
-            Expanded(
-                flex: 2,
-                child: Container(
-                    // width: 250,
-                    // height: 250,
-                    color: Colors.amberAccent,
-                    padding: const EdgeInsets.all(5.0),
-                    // alignment: Alignment.bottomCenter,
-                    child: _buildLanguageTitleField())),
-                    // child: _buildUserIdField())),
-            Expanded(
-                flex: 1,
-                child: Container(
-                    // width: 250,
-                    // height: 250,
-                    color: Colors.amberAccent,
-                    padding: const EdgeInsets.all(5.0),
-                    // alignment: Alignment.bottomCenter,
-                    child: _buildItemAddButton())),
-                    // child: _buildSignInButton())),
-            Expanded(
-                flex: 6,
-                child: Container(
-                    // width: 100,
-                    // height: 300,
-                    color: Colors.redAccent,
-                    padding: const EdgeInsets.all(5.0),
-                    // alignment: Alignment.bottomCenter,
-                    child: _buildListView(_bottomNavBarSelectedIndex))),
-            Expanded(
-                flex: 1,
-                child: Container(
-                  // width: 100,
-                  // height: 300,
-                    color: Colors.redAccent,
-                    padding: const EdgeInsets.all(5.0),
-                    // alignment: Alignment.bottomCenter,
-                    child: _widgetOptions.elementAt(_bottomNavBarSelectedIndex))),
-          ],
-        ),
-
-        // body: Center(
-        //   child: _widgetOptions.elementAt(_bottomNavBarSelectedIndex),
-        // ),
-
-
-
-            bottomNavigationBar: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  // icon: Icon(Icons.home),
-                  icon: Text("home"),
-                  activeIcon: Text("home +"),
-                  label: 'home',
-                  backgroundColor: Colors.red,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.business),
-                  label: 'Business',
-                  backgroundColor: Colors.green,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.school),
-                  label: 'School',
-                  backgroundColor: Colors.purple,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.add),
-                  label: 'Settings',
-                  backgroundColor: Colors.pink,
-                ),
-              ],
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              currentIndex: _bottomNavBarSelectedIndex,
-              selectedItemColor: Colors.amber[800],
-              onTap: _bottomNavBarOnItemTapped,
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('BottomNavigationBar Sample'),
+              // title: Text(AppLocalizations.of(context).translate('home_tv_posts')),
+              actions: _buildAppBarActions(context),
             ),
-          );
+
+            body: Column(
+              // overflow: Overflow.visible,
+
+              // _menuStoreLocal.getShowMenuAddFormLocal()
 
 
-          /*
-          return Column(
-            // overflow: Overflow.visible,
-            children: <Widget>[
-              Expanded(
-                  flex: 2,
-                  child: Container(
-                    // width: 250,
-                    // height: 250,
-                      color: Colors.amberAccent,
-                      padding: const EdgeInsets.all(5.0),
-                      // alignment: Alignment.bottomCenter,
-                      child: _buildUserIdField()
-                  )
-              ),
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                    // width: 250,
-                    // height: 250,
-                      color: Colors.amberAccent,
-                      padding: const EdgeInsets.all(5.0),
-                      // alignment: Alignment.bottomCenter,
-                      child: _buildSignInButton()
-                  )
-              ),
-              Expanded(
-                  flex: 7,
-                  child: Container(
-                    // width: 100,
-                    // height: 300,
-                      color: Colors.redAccent,
-                      padding: const EdgeInsets.all(5.0),
-                      // alignment: Alignment.bottomCenter,
-                      child: _buildListView()
-                  )
-              ),
-            ],
-          );
-          */
+              children: <Widget>[
+                  Visibility(
+                    visible: _visible, // _menuStoreLocal.getShowMenuAddFormLocal(),
+                    child: Text('visibility test')
+                  ),
+
+                  Expanded(
+                      flex: 1,
+                      child: Container(
+                        // width: 250,
+                        // height: 250,
+                          color: Colors.amberAccent,
+                          padding: const EdgeInsets.all(5.0),
+                          // alignment: Alignment.bottomCenter,
+
+                          child: _buildMenuTitleField())),
+                // ),
+
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                      // width: 250,
+                      // height: 250,
+                        color: Colors.amberAccent,
+                        padding: const EdgeInsets.all(5.0),
+                        // alignment: Alignment.bottomCenter,
+
+                        child: _buildMenuTitleDetailField())),        // child: _buildUserIdField())),
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                        // width: 250,
+                        // height: 250,
+                        color: Colors.amberAccent,
+                        padding: const EdgeInsets.all(5.0),
+                        // alignment: Alignment.bottomCenter,
+                        child: _buildItemAddButton())),
+                        // child: _buildSignInButton())),
+                Expanded(
+                    flex: 6,
+                    child: Container(
+                        // width: 100,
+                        // height: 300,
+                        color: Colors.redAccent,
+                        padding: const EdgeInsets.all(5.0),
+                        // alignment: Alignment.bottomCenter,
+                        child: _buildListView(_bottomNavBarSelectedIndex))),
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                      // width: 100,
+                      // height: 300,
+                        color: Colors.redAccent,
+                        padding: const EdgeInsets.all(5.0),
+                        // alignment: Alignment.bottomCenter,
+                        child: _widgetOptions.elementAt(_bottomNavBarSelectedIndex))),
+              ],
+            ),
+
+
+
+
+            // body: Center(
+            //   child: _widgetOptions.elementAt(_bottomNavBarSelectedIndex),
+            // ),
+
+
+
+                bottomNavigationBar: BottomNavigationBar(
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      // icon: Icon(Icons.home),
+                      icon: Text("home"),
+                      activeIcon: Text("home +"),
+                      label: 'home',
+                      backgroundColor: Colors.red,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.business),
+                      label: 'Business',
+                      backgroundColor: Colors.green,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.school),
+                      label: 'School',
+                      backgroundColor: Colors.purple,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.add),
+                      label: 'Settings',
+                      backgroundColor: Colors.pink,
+                    ),
+                  ],
+                  showSelectedLabels: false,
+                  showUnselectedLabels: false,
+                  currentIndex: _bottomNavBarSelectedIndex,
+                  selectedItemColor: Colors.amber[800],
+                  onTap: _bottomNavBarOnItemTapped,
+                ),
+              );
+
+
+              /*
+              return Column(
+                // overflow: Overflow.visible,
+                children: <Widget>[
+                  Expanded(
+                      flex: 2,
+                      child: Container(
+                        // width: 250,
+                        // height: 250,
+                          color: Colors.amberAccent,
+                          padding: const EdgeInsets.all(5.0),
+                          // alignment: Alignment.bottomCenter,
+                          child: _buildUserIdField()
+                      )
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Container(
+                        // width: 250,
+                        // height: 250,
+                          color: Colors.amberAccent,
+                          padding: const EdgeInsets.all(5.0),
+                          // alignment: Alignment.bottomCenter,
+                          child: _buildSignInButton()
+                      )
+                  ),
+                  Expanded(
+                      flex: 7,
+                      child: Container(
+                        // width: 100,
+                        // height: 300,
+                          color: Colors.redAccent,
+                          padding: const EdgeInsets.all(5.0),
+                          // alignment: Alignment.bottomCenter,
+                          child: _buildListView()
+                      )
+                  ),
+                ],
+              );
+              */
 
 
 
@@ -274,6 +316,42 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       },
     );
     */
+  }
+
+
+  List<Widget> _buildAppBarActions(BuildContext context) {
+    return <Widget>[
+      _buildMenuAddButton(),
+    ];
+  }
+
+  Widget _buildMenuAddButton() {
+    // Wrapping in the Observer will automatically re-render on changes to counter.value
+    return Observer(
+      builder: (context) {
+        return IconButton(
+          onPressed: () {
+            // 메뉴 아이템 추가 위젯용 flag 설정
+            _toggleShowMenuAddForm();
+
+            //
+            // _menuStoreLocal.toggleShowMenuAddForm();
+            //
+            // setState(() {
+            //   _visible = _menuStoreLocal.getShowMenuAddFormLocal();
+            // });
+            //
+            // print('menu add button click : ' + _visible.toString());
+
+            // _themeStore.changeBrightnessToDark(!_themeStore.darkMode);
+          },
+          icon: Icon(
+            Icons.bookmark_add
+            // _themeStore.darkMode ? Icons.brightness_5 : Icons.brightness_3,
+          ),
+        );
+      },
+    );
   }
 
 
@@ -348,7 +426,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
             subtitle: Text(
               // '${_menuStoreLocal.menuList?.menus?[position].price}',
 
-              '${_menuStoreLocal.listMenuLanguageLocal()?[_pos]} : ' + '${_menuStoreLocal.listMenuUseLocal()?[_pos]}',
+              '${_menuStoreLocal.listMenuLanguageDetailLocal()?[_pos]} : ' + '${_menuStoreLocal.listMenuUseLocal()?[_pos]}',
               // '${_menuStoreLocal.listMenuItemLocal()?[position].code}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -372,7 +450,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
               //
               // });
             },
-            secondary: const Icon(Icons.lightbulb_outline),
+            secondary: const Icon(Icons.bookmark_border_outlined), // Icons.lightbulb_outline
           );
 
         }
@@ -403,7 +481,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
 
 
-  Widget _buildLanguageTitleField() {
+  Widget _buildMenuTitleField() {
     return Observer(
       builder: (context) {
         return TextFieldWidget(
@@ -421,6 +499,30 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
             FocusScope.of(context).requestFocus(_passwordFocusNode);
           },
           errorText: _formStore.formErrorStore.menuTitle,
+        );
+      },
+    );
+  }
+
+
+  Widget _buildMenuTitleDetailField() {
+    return Observer(
+      builder: (context) {
+        return TextFieldWidget(
+          hint: AppLocalizations.of(context).translate('menu_title_detail'),
+          inputType: TextInputType.text, // TextInputType.emailAddress,
+          icon: Icons.new_label, // .person,
+          iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
+          textController: _menuTitleDetailController,
+          inputAction: TextInputAction.next,
+          autoFocus: false,
+          onChanged: (value) {
+            _formStore.setMenuTitleDetail(_menuTitleDetailController.text);
+          },
+          onFieldSubmitted: (value) {
+            FocusScope.of(context).requestFocus(_passwordFocusNode);
+          },
+          errorText: _formStore.formErrorStore.menuTitleDetail,
         );
       },
     );
@@ -460,11 +562,12 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
         if (_menuTitleController.text.isDefinedAndNotNull && _menuTitleController.text.isNotEmpty) {
           // item 추가
           _menuStoreLocal.addMenuLanguageLocal(_menuTitleController.text.trim());
-          _menuStoreLocal.addMenuLanguageDetailLocal(_menuTitleController.text.trim());
+          _menuStoreLocal.addMenuLanguageDetailLocal(_menuTitleDetailController.text.trim());
           _menuStoreLocal.addMenuUseLocal(true);
 
           // input clear
           _menuTitleController.text = "";
+          _menuTitleDetailController.text = "";
 
           // notice
           _showSuccessMessage("The item was added successfully.");
