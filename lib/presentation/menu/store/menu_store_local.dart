@@ -60,6 +60,8 @@ abstract class _MenuStoreLocal with Store {
   // @observable
   // ListView listViewMenuItemLocal;
 
+
+  // 이거는 안 되는 듯?
   @observable
   bool _showMenuAddForm = false;
 

@@ -160,10 +160,36 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
               children: <Widget>[
                   Visibility(
                     visible: _visible, // _menuStoreLocal.getShowMenuAddFormLocal(),
-                    child: Text('visibility test')
+                    // child: Text('visibility test')
+                    child : Expanded(
+                        flex: 1,
+                        child: Container(
+                          // width: 250,
+                          // height: 250,
+                            color: Colors.amberAccent,
+                            padding: const EdgeInsets.all(5.0),
+                            // alignment: Alignment.bottomCenter,
+
+                            child: _buildMenuTitleField())),
                   ),
 
-                  Expanded(
+                  // Expanded(
+                  //     flex: 1,
+                  //     child: Container(
+                  //       // width: 250,
+                  //       // height: 250,
+                  //         color: Colors.amberAccent,
+                  //         padding: const EdgeInsets.all(5.0),
+                  //         // alignment: Alignment.bottomCenter,
+                  //
+                  //         child: _buildMenuTitleField())),
+                // ),
+
+
+                Visibility(
+                  visible: _visible, // _menuStoreLocal.getShowMenuAddFormLocal(),
+                  // child: Text('visibility test')
+                  child : Expanded(
                       flex: 1,
                       child: Container(
                         // width: 250,
@@ -172,29 +198,52 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                           padding: const EdgeInsets.all(5.0),
                           // alignment: Alignment.bottomCenter,
 
-                          child: _buildMenuTitleField())),
-                // ),
+                          child: _buildMenuTitleDetailField())),
+                ),
 
-                Expanded(
-                    flex: 1,
-                    child: Container(
-                      // width: 250,
-                      // height: 250,
-                        color: Colors.amberAccent,
-                        padding: const EdgeInsets.all(5.0),
-                        // alignment: Alignment.bottomCenter,
 
-                        child: _buildMenuTitleDetailField())),        // child: _buildUserIdField())),
-                Expanded(
-                    flex: 1,
-                    child: Container(
+                // Expanded(
+                //     flex: 1,
+                //     child: Container(
+                //       // width: 250,
+                //       // height: 250,
+                //         color: Colors.amberAccent,
+                //         padding: const EdgeInsets.all(5.0),
+                //         // alignment: Alignment.bottomCenter,
+                //
+                //         child: _buildMenuTitleDetailField())),
+
+                // child: _buildUserIdField())),
+
+
+
+                Visibility(
+                  visible: _visible, // _menuStoreLocal.getShowMenuAddFormLocal(),
+                  // child: Text('visibility test')
+                  child : Expanded(
+                      flex: 1,
+                      child: Container(
                         // width: 250,
                         // height: 250,
-                        color: Colors.amberAccent,
-                        padding: const EdgeInsets.all(5.0),
-                        // alignment: Alignment.bottomCenter,
-                        child: _buildItemAddButton())),
+                          color: Colors.amberAccent,
+                          padding: const EdgeInsets.all(5.0),
+                          // alignment: Alignment.bottomCenter,
+                          child: _buildItemAddButton())),
+                ),
+
+                // Expanded(
+                //     flex: 1,
+                //     child: Container(
+                //         // width: 250,
+                //         // height: 250,
+                //         color: Colors.amberAccent,
+                //         padding: const EdgeInsets.all(5.0),
+                //         // alignment: Alignment.bottomCenter,
+                //         child: _buildItemAddButton())),
                         // child: _buildSignInButton())),
+
+
+
                 Expanded(
                     flex: 6,
                     child: Container(
