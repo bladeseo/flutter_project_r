@@ -30,6 +30,40 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
               name: '_MenuStoreLocal.current_menu'))
       .value;
 
+  late final _$_categoryNameLocalListAtom =
+      Atom(name: '_MenuStoreLocal._categoryNameLocalList', context: context);
+
+  @override
+  ObservableList<String> get _categoryNameLocalList {
+    _$_categoryNameLocalListAtom.reportRead();
+    return super._categoryNameLocalList;
+  }
+
+  @override
+  set _categoryNameLocalList(ObservableList<String> value) {
+    _$_categoryNameLocalListAtom
+        .reportWrite(value, super._categoryNameLocalList, () {
+      super._categoryNameLocalList = value;
+    });
+  }
+
+  late final _$_categoryBgColorLocalListAtom =
+      Atom(name: '_MenuStoreLocal._categoryBgColorLocalList', context: context);
+
+  @override
+  ObservableList<MaterialAccentColor> get _categoryBgColorLocalList {
+    _$_categoryBgColorLocalListAtom.reportRead();
+    return super._categoryBgColorLocalList;
+  }
+
+  @override
+  set _categoryBgColorLocalList(ObservableList<MaterialAccentColor> value) {
+    _$_categoryBgColorLocalListAtom
+        .reportWrite(value, super._categoryBgColorLocalList, () {
+      super._categoryBgColorLocalList = value;
+    });
+  }
+
   late final _$_menuLanguageLocalListAtom =
       Atom(name: '_MenuStoreLocal._menuLanguageLocalList', context: context);
 
@@ -148,11 +182,22 @@ mixin _$MenuStoreLocal on _MenuStoreLocal, Store {
       ActionController(name: '_MenuStoreLocal', context: context);
 
   @override
-  List<ObservableList<String>> getUpdatedMenuList() {
+  List<String> listCategoryNameLocal() {
     final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
-        name: '_MenuStoreLocal.getUpdatedMenuList');
+        name: '_MenuStoreLocal.listCategoryNameLocal');
     try {
-      return super.getUpdatedMenuList();
+      return super.listCategoryNameLocal();
+    } finally {
+      _$_MenuStoreLocalActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  List<MaterialAccentColor> listCategoryBgColorLocal() {
+    final _$actionInfo = _$_MenuStoreLocalActionController.startAction(
+        name: '_MenuStoreLocal.listCategoryBgColorLocal');
+    try {
+      return super.listCategoryBgColorLocal();
     } finally {
       _$_MenuStoreLocalActionController.endAction(_$actionInfo);
     }

@@ -69,9 +69,16 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   }
 
 
+  // bottomNavBar
   int _bottomNavBarSelectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+
+  static List<BottomNavigationBarItem> _bottomNavigationBarItemList = <BottomNavigationBarItem>[];
+
+  static List<Widget> _widgetOptions = <Widget>[];
+
+  /*
+  static List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Home',
       style: optionStyle,
@@ -89,6 +96,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       style: optionStyle,
     ),
   ];
+  */
 
   void _bottomNavBarOnItemTapped(int index) {
     setState(() {
@@ -101,6 +109,48 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   void initState() {
     super.initState();
     _passwordFocusNode = FocusNode();
+
+
+
+
+    for (var i = 0; i < _menuStoreLocal.listCategoryNameLocal().length; i++) {
+      _widgetOptions.add(Text(
+        _menuStoreLocal.listCategoryNameLocal().elementAt(i),
+        style: optionStyle,
+      ));
+
+      _bottomNavigationBarItemList.add(BottomNavigationBarItem(
+        // icon: Icon(Icons.home),
+        icon: Text(_menuStoreLocal.listCategoryNameLocal().elementAt(i)),
+        activeIcon: Text(_menuStoreLocal.listCategoryNameLocal().elementAt(i) + " +"),
+        label: _menuStoreLocal.listCategoryNameLocal().elementAt(i),
+        backgroundColor: _menuStoreLocal.listCategoryBgColorLocal().elementAt(i),
+      ));
+
+    }
+
+
+    //
+    // _widgetOptions.add(Text(
+    //   'Index 0: Home',
+    //   style: optionStyle,
+    // ));
+    //
+    // _widgetOptions.add(Text(
+    //   'Index 1: Office',
+    //   style: optionStyle,
+    // ));
+    //
+    // _widgetOptions.add(Text(
+    //   'Index 2: School',
+    //   style: optionStyle,
+    // ));
+    //
+    // _widgetOptions.add(Text(
+    //   'Index 3: Settings',
+    //   style: optionStyle,
+    // ));
+
   }
 
 
@@ -146,7 +196,8 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
         builder: (context) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('BottomNavigationBar Sample'),
+              title: _widgetOptions.elementAt(_bottomNavBarSelectedIndex),
+              // title: const Text('BottomNavigationBar Sample'),
               // title: Text(AppLocalizations.of(context).translate('home_tv_posts')),
               actions: _buildAppBarActions(context),
             ),
@@ -253,6 +304,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                         padding: const EdgeInsets.all(5.0),
                         // alignment: Alignment.bottomCenter,
                         child: _buildListView(_bottomNavBarSelectedIndex))),
+
                 Expanded(
                     flex: 1,
                     child: Container(
@@ -275,7 +327,13 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
 
                 bottomNavigationBar: BottomNavigationBar(
-                  items: const <BottomNavigationBarItem>[
+                  // items: const <BottomNavigationBarItem>[
+
+                  items: _bottomNavigationBarItemList,
+
+                  /*
+                  items: <BottomNavigationBarItem>[
+
                     BottomNavigationBarItem(
                       // icon: Icon(Icons.home),
                       icon: Text("home"),
@@ -283,22 +341,28 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                       label: 'home',
                       backgroundColor: Colors.red,
                     ),
+
                     BottomNavigationBarItem(
                       icon: Icon(Icons.business),
                       label: 'Business',
                       backgroundColor: Colors.green,
                     ),
+
                     BottomNavigationBarItem(
                       icon: Icon(Icons.school),
                       label: 'School',
                       backgroundColor: Colors.purple,
                     ),
+
                     BottomNavigationBarItem(
                       icon: Icon(Icons.add),
                       label: 'Settings',
                       backgroundColor: Colors.pink,
                     ),
+
                   ],
+                  */
+
                   showSelectedLabels: false,
                   showUnselectedLabels: false,
                   currentIndex: _bottomNavBarSelectedIndex,
@@ -378,7 +442,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
     // Wrapping in the Observer will automatically re-render on changes to counter.value
     return Observer(
       builder: (context) {
-        return IconButton(
+
+        // return IconButton(
+        return OutlinedButton(
           onPressed: () {
             // 메뉴 아이템 추가 위젯용 flag 설정
             _toggleShowMenuAddForm();
@@ -394,10 +460,30 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
             // _themeStore.changeBrightnessToDark(!_themeStore.darkMode);
           },
-          icon: Icon(
-            Icons.bookmark_add
-            // _themeStore.darkMode ? Icons.brightness_5 : Icons.brightness_3,
+
+
+          // icon: Icon(
+          //   Icons.bookmark_add
+          //   // _themeStore.darkMode ? Icons.brightness_5 : Icons.brightness_3,
+          // ),
+
+          child: Stack(
+            children: <Widget>[
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Icon(Icons.access_alarm)
+              ),
+              Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Testing",
+                    textAlign: TextAlign.center,
+                  )
+              )
+            ],
           ),
+
+
         );
       },
     );
@@ -459,7 +545,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
             title: Text(
               // '${_menuStoreLocal.menuList?.menus?[position].id}',
 
-              '${_menuStoreLocal.listMenuLanguageLocal()?[_pos]}',
+              // '${_menuStoreLocal.listMenuLanguageLocal()?[_pos]}',
+              '${_menuStoreLocal.listMenuLanguageLocal()?.elementAt(_pos)}',
+
               // '${_menuStoreLocal.listMenuItemLocal()?[position].language}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -646,7 +734,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
           _menuStoreLocal.listMenuLanguageLocal()?[0] = _userEmailController.text;
 
           // _showErrorMessage(_menuStoreLocal.menuItemLocalList[0].language.toString());
-          _showErrorMessage(_menuStoreLocal.listMenuLanguageLocal()[0]);
+
+          // _showErrorMessage(_menuStoreLocal.listMenuLanguageLocal()[0]);
+          _showErrorMessage(_menuStoreLocal.listMenuLanguageLocal().elementAt(0));
 
           // _showErrorMessage('Please fill in all fields');
         }

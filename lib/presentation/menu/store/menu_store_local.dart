@@ -38,6 +38,17 @@ abstract class _MenuStoreLocal with Store {
   //   'España',
   // ].asObservable();
 
+
+  // category
+  // name, icon, bgcolor
+  @observable
+  ObservableList<String> _categoryNameLocalList = <String>['한식', '중식', '일식'].asObservable();
+
+  @observable
+  ObservableList<MaterialAccentColor> _categoryBgColorLocalList = <MaterialAccentColor>[Colors.redAccent, Colors.blueAccent, Colors.greenAccent].asObservable();
+
+
+  // menu
   @observable
   ObservableList<String> _menuLanguageLocalList = <String>['Korean', 'English', 'Danish'].asObservable();
 
@@ -47,12 +58,18 @@ abstract class _MenuStoreLocal with Store {
   @observable
   ObservableList<bool> _menuUseLocalList = <bool>[true, true, false].asObservable();
 
+
+
   @action
-  List<ObservableList<String>> getUpdatedMenuList() {
-    List<ObservableList<String>> list = [];
-    list.add(_menuLanguageLocalList);
-    return list;
+  List<String> listCategoryNameLocal() {
+    return _categoryNameLocalList;
   }
+
+  @action
+  List<MaterialAccentColor> listCategoryBgColorLocal() {
+    return _categoryBgColorLocalList;
+  }
+
 
   // menuList.add(menuLanguageLocalList);
 
@@ -75,6 +92,13 @@ abstract class _MenuStoreLocal with Store {
 
     return _menuLanguageLocalList;
   }
+
+  // @action
+  // List<ObservableList<String>> getUpdatedMenuList() {
+  //   List<ObservableList<String>> list = [];
+  //   list.add(_menuLanguageLocalList);
+  //   return list;
+  // }
 
   @action
   List<String> listMenuLanguageDetailLocal() {
