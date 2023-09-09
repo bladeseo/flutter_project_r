@@ -10,6 +10,8 @@ import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 
 import 'package:boilerplate/presentation/home/store/language/language_store.dart';
 
+import 'package:boilerplate/presentation/menu/store/menu_store_local.dart';
+
 import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
 import 'package:boilerplate/presentation/login/store/login_store.dart';
 import 'package:boilerplate/utils/device/device_utils.dart';
@@ -43,6 +45,8 @@ class _RouletteScreenState extends State<RouletteScreen> {
   final FormStore _formStore = getIt<FormStore>();
   final UserStore _userStore = getIt<UserStore>();
 
+  final MenuStoreLocal _menuStoreLocal = getIt<MenuStoreLocal>();
+
   //focus node:-----------------------------------------------------------------
   late FocusNode _passwordFocusNode;
 
@@ -51,7 +55,7 @@ class _RouletteScreenState extends State<RouletteScreen> {
   // viewBox="-100 -100 200 200"
   // width=100 height=100
   // width="100%" preserveAspectRatio="xMidYMid meet"
-  String rawSvg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 200 200" width="100%" preserveAspectRatio="xMidYMid meet" fill="none" stroke-width="0.5">
+  String _rawSvg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 200 200" width="100%" preserveAspectRatio="xMidYMid meet" fill="none" stroke-width="0.5">
  <g>
   <title>Layer 1</title>
   <circle r="100" fill="#e1d85d" stroke="gray"/>
@@ -59,10 +63,10 @@ class _RouletteScreenState extends State<RouletteScreen> {
   <line x2="0" y2="100" stroke="gray" stroke-width="0.2"/>
   <line x2="100" y2="0" stroke="gray" stroke-width="0.2"/>
   <line x2="-100" y2="0" stroke="gray" stroke-width="0.2"/>
-  <text class="small" text-anchor="middle" transform="translate(50,-50) rotate(45)" style="fill:red;">A1</text>
-  <text class="small" text-anchor="middle" transform="translate(50,50) rotate(135)" style="fill:blue;">B2</text>
-  <text class="small" text-anchor="middle" transform="translate(-50,-50) rotate(-45)" style="fill:green;">C3</text>
-  <text class="small" text-anchor="middle" transform="translate(-50,50) rotate(-135)" style="fill:black;">D4</text>
+  <text class="small" text-anchor="middle" transform="translate(50,-50) rotate(45)" style="fill:red;">ITEM_0</text>
+  <text class="small" text-anchor="middle" transform="translate(50,50) rotate(135)" style="fill:blue;">ITEM_1</text>
+  <text class="small" text-anchor="middle" transform="translate(-50,-50) rotate(-45)" style="fill:green;">ITEM_2</text>
+  <text class="small" text-anchor="middle" transform="translate(-50,50) rotate(-135)" style="fill:black;">ITEM_3</text>
  </g>
 </svg>''';
 
@@ -109,6 +113,18 @@ class _RouletteScreenState extends State<RouletteScreen> {
   void initState() {
     super.initState();
     _passwordFocusNode = FocusNode();
+
+    // svg 편집
+    // ITEM_{index} =>
+
+    // String pattern = "string with multiple words";
+    // String stringToReplace = "we will change this string with multiple words with adding tags";
+    // String result = stringToReplace.replaceAllMapped(pattern,(match)=>"<anyTag>${match[0]}</anyTag>");
+
+    for (var i = 0; i < _menuStoreLocal.listMenuLanguageLocal().length; i++) {
+      String pattern = "ITEM_" + i.toString();
+      _rawSvg = _rawSvg.replaceAllMapped(pattern, (match) => _menuStoreLocal.listMenuLanguageLocal().elementAt(i).toString());
+    }
   }
 
   @override
@@ -139,7 +155,7 @@ class _RouletteScreenState extends State<RouletteScreen> {
               child: AnimatedRotation(
                   turns: currTurns,
                   duration: const Duration(seconds: 2),
-                  child: SvgPicture.string(rawSvg,
+                  child: SvgPicture.string(_rawSvg,
                       width: 500,
                       height: 500,
                       fit: BoxFit.fitWidth)

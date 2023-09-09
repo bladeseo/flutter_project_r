@@ -73,9 +73,10 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   int _bottomNavBarSelectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  static List<BottomNavigationBarItem> _bottomNavigationBarItemList = <BottomNavigationBarItem>[];
+  // static
+  List<BottomNavigationBarItem> _bottomNavigationBarItemList = <BottomNavigationBarItem>[];
 
-  static List<Widget> _widgetOptions = <Widget>[];
+  List<Widget> _widgetOptions = <Widget>[];
 
   /*
   static List<Widget> _widgetOptions = <Widget>[
@@ -123,8 +124,8 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
         // icon: Icon(Icons.home),
         icon: Text(_menuStoreLocal.listCategoryNameLocal().elementAt(i)),
         activeIcon: Text(_menuStoreLocal.listCategoryNameLocal().elementAt(i) + " +"),
-        label: _menuStoreLocal.listCategoryNameLocal().elementAt(i),
-        backgroundColor: _menuStoreLocal.listCategoryBgColorLocal().elementAt(i),
+        label: _menuStoreLocal.listCategoryNameLocal().elementAt(i).toString(),
+        // backgroundColor: Colors.blue // _menuStoreLocal.listCategoryBgColorLocal().elementAt(i),
       ));
 
     }
@@ -296,24 +297,30 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
 
                 Expanded(
-                    flex: 6,
+                    flex: 7,
                     child: Container(
                         // width: 100,
                         // height: 300,
-                        color: Colors.redAccent,
+
+                        // color: Colors.redAccent,
+                        color: _menuStoreLocal.listCategoryBgColorLocal().elementAt(_bottomNavBarSelectedIndex),
+
                         padding: const EdgeInsets.all(5.0),
                         // alignment: Alignment.bottomCenter,
                         child: _buildListView(_bottomNavBarSelectedIndex))),
 
+                /*
                 Expanded(
                     flex: 1,
                     child: Container(
                       // width: 100,
                       // height: 300,
-                        color: Colors.redAccent,
+                        // color: Colors.redAccent,
+                        color: _menuStoreLocal.listCategoryBgColorLocal().elementAt(_bottomNavBarSelectedIndex),
                         padding: const EdgeInsets.all(5.0),
                         // alignment: Alignment.bottomCenter,
                         child: _widgetOptions.elementAt(_bottomNavBarSelectedIndex))),
+               */
               ],
             ),
 

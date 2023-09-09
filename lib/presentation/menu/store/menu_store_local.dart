@@ -42,10 +42,11 @@ abstract class _MenuStoreLocal with Store {
   // category
   // name, icon, bgcolor
   @observable
-  ObservableList<String> _categoryNameLocalList = <String>['한식', '중식', '일식'].asObservable();
+  ObservableList<String> _categoryNameLocalList = <String>['한식', '중식', '일식', '+'].asObservable();
 
   @observable
-  ObservableList<MaterialAccentColor> _categoryBgColorLocalList = <MaterialAccentColor>[Colors.redAccent, Colors.blueAccent, Colors.greenAccent].asObservable();
+  ObservableList<MaterialAccentColor> _categoryBgColorLocalList = <MaterialAccentColor>[Colors.redAccent, Colors.blueAccent, Colors.greenAccent, Colors.yellowAccent].asObservable();
+  // ObservableList<Color> _categoryBgColorLocalList = <Color>[Colors.red, Colors.blue, Colors.green].asObservable();
 
 
   // menu
@@ -66,6 +67,7 @@ abstract class _MenuStoreLocal with Store {
   }
 
   @action
+  // List<Color> listCategoryBgColorLocal() {
   List<MaterialAccentColor> listCategoryBgColorLocal() {
     return _categoryBgColorLocalList;
   }
