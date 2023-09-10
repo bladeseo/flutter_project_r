@@ -121,9 +121,9 @@ class _RouletteScreenState extends State<RouletteScreen> {
     // String stringToReplace = "we will change this string with multiple words with adding tags";
     // String result = stringToReplace.replaceAllMapped(pattern,(match)=>"<anyTag>${match[0]}</anyTag>");
 
-    for (var i = 0; i < _menuStoreLocal.listMenuLanguageLocal().length; i++) {
+    for (var i = 0; i < _menuStoreLocal.listMenuTitleLocal(0).length; i++) {
       String pattern = "ITEM_" + i.toString();
-      _rawSvg = _rawSvg.replaceAllMapped(pattern, (match) => _menuStoreLocal.listMenuLanguageLocal().elementAt(i).toString());
+      _rawSvg = _rawSvg.replaceAllMapped(pattern, (match) => _menuStoreLocal.listMenuTitleLocal(0).elementAt(i).toString());
     }
   }
 

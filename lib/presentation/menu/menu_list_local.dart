@@ -280,7 +280,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                           color: Colors.amberAccent,
                           padding: const EdgeInsets.all(5.0),
                           // alignment: Alignment.bottomCenter,
-                          child: _buildItemAddButton())),
+                          child: _buildMenuAddButton())),
                 ),
 
                 // Expanded(
@@ -441,11 +441,11 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
   List<Widget> _buildAppBarActions(BuildContext context) {
     return <Widget>[
-      _buildMenuAddButton(),
+      _buildNewMenuButton(),
     ];
   }
 
-  Widget _buildMenuAddButton() {
+  Widget _buildNewMenuButton() {
     // Wrapping in the Observer will automatically re-render on changes to counter.value
     return Observer(
       builder: (context) {
@@ -500,9 +500,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   Widget _buildListView(int index) {
       print("index @ _buildListView : " + index.toString());
 
-      return _menuStoreLocal.listMenuLanguageLocal() != null
+      return _menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex) != null
           ? ListView.separated(
-        itemCount: _menuStoreLocal.listMenuLanguageLocal()!.length,
+        itemCount: _menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex)!.length,
         separatorBuilder: (context, position) {
           return Divider();
         },
@@ -553,7 +553,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
               // '${_menuStoreLocal.menuList?.menus?[position].id}',
 
               // '${_menuStoreLocal.listMenuLanguageLocal()?[_pos]}',
-              '${_menuStoreLocal.listMenuLanguageLocal()?.elementAt(_pos)}',
+              '${_menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex)?.elementAt(_pos)}',
 
               // '${_menuStoreLocal.listMenuItemLocal()?[position].language}',
               maxLines: 1,
@@ -562,7 +562,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
               // style: Theme.of(context).textTheme.titleMedium
               style: TextStyle(
                 fontSize: 20,
-                color: _menuStoreLocal.listMenuUseLocal()?[_pos] ?? false // _isUse
+                color: _menuStoreLocal.listMenuUseLocal(_bottomNavBarSelectedIndex)?[_pos] ?? false // _isUse
                     ? Colors.white
                     : Colors.black,
               ),
@@ -570,7 +570,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
             subtitle: Text(
               // '${_menuStoreLocal.menuList?.menus?[position].price}',
 
-              '${_menuStoreLocal.listMenuLanguageDetailLocal()?[_pos]} : ' + '${_menuStoreLocal.listMenuUseLocal()?[_pos]}',
+              '${_menuStoreLocal.listMenuDetailLocal(_bottomNavBarSelectedIndex)?[_pos]} : ' + '${_menuStoreLocal.listMenuUseLocal(_bottomNavBarSelectedIndex)?[_pos]}',
               // '${_menuStoreLocal.listMenuItemLocal()?[position].code}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -579,12 +579,12 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                   fontSize: 15
               ),
             ),
-            value: _menuStoreLocal.listMenuUseLocal()?[_pos] ?? false, // _isUse
+            value: _menuStoreLocal.listMenuUseLocal(_bottomNavBarSelectedIndex)?[_pos] ?? false, // _isUse
             onChanged:(bool value) {
               print('value : ' + value.toString());
 
               // _isUse = value;
-              _menuStoreLocal.changeMenuUseLocal(_pos, value);
+              _menuStoreLocal.changeMenuUseLocal(_bottomNavBarSelectedIndex, _pos, value);
 
               // 테마 변경 호출
               // _themeStore.changeBrightnessToDark(!_themeStore.darkMode);
@@ -697,7 +697,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   }
 
 
-  Widget _buildItemAddButton() {
+  Widget _buildMenuAddButton() {
     return RoundedButtonWidget(
       buttonText: AppLocalizations.of(context).translate('menu_btn_item_add'),
       buttonColor: Colors.blueAccent, // .orangeAccent,
@@ -705,13 +705,16 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       onPressed: () async {
         if (_menuTitleController.text.isDefinedAndNotNull && _menuTitleController.text.isNotEmpty) {
           // item 추가
-          _menuStoreLocal.addMenuLanguageLocal(_menuTitleController.text.trim());
-          _menuStoreLocal.addMenuLanguageDetailLocal(_menuTitleDetailController.text.trim());
-          _menuStoreLocal.addMenuUseLocal(true);
+          _menuStoreLocal.addMenuTitleLocal(_bottomNavBarSelectedIndex, _menuTitleController.text.trim());
+          _menuStoreLocal.addMenuDetailLocal(_bottomNavBarSelectedIndex, _menuTitleDetailController.text.trim());
+          _menuStoreLocal.addMenuUseLocal(_bottomNavBarSelectedIndex, true);
 
           // input clear
           _menuTitleController.text = "";
           _menuTitleDetailController.text = "";
+
+          // 2D array 의 state 는 자동으로 view 가 업데이트 안 됨. Observe 작동하지 않음.
+          setState(() {});
 
           // notice
           _showSuccessMessage("The item was added successfully.");
@@ -738,12 +741,12 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
           // changeMenuLanguage
 
           // _menuStoreLocal.menuItemLocalList?[0].language = _userEmailController.text;
-          _menuStoreLocal.listMenuLanguageLocal()?[0] = _userEmailController.text;
+          _menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex)?[0] = _userEmailController.text;
 
           // _showErrorMessage(_menuStoreLocal.menuItemLocalList[0].language.toString());
 
           // _showErrorMessage(_menuStoreLocal.listMenuLanguageLocal()[0]);
-          _showErrorMessage(_menuStoreLocal.listMenuLanguageLocal().elementAt(0));
+          _showErrorMessage(_menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex).elementAt(0));
 
           // _showErrorMessage('Please fill in all fields');
         }

@@ -41,24 +41,16 @@ abstract class _MenuStoreLocal with Store {
 
   // category
   // name, icon, bgcolor
+  // to-do 마지막 Cat. 의 링크는 추가가 되도록
   @observable
-  ObservableList<String> _categoryNameLocalList = <String>['한식', '중식', '일식', '+'].asObservable();
+  ObservableList<String> _categoryNameLocalList = <String>['한식', '중식', '일식', '분식', '야식', '+'].asObservable();
 
   @observable
-  ObservableList<MaterialAccentColor> _categoryBgColorLocalList = <MaterialAccentColor>[Colors.redAccent, Colors.blueAccent, Colors.greenAccent, Colors.yellowAccent].asObservable();
+  ObservableList<MaterialAccentColor> _categoryBgColorLocalList = <MaterialAccentColor>[
+    Colors.redAccent, Colors.blueAccent, Colors.orangeAccent, Colors.pinkAccent, Colors.indigoAccent,
+    Colors.purpleAccent, Colors.greenAccent, Colors.tealAccent, Colors.cyanAccent
+  ].asObservable();
   // ObservableList<Color> _categoryBgColorLocalList = <Color>[Colors.red, Colors.blue, Colors.green].asObservable();
-
-
-  // menu
-  @observable
-  ObservableList<String> _menuLanguageLocalList = <String>['Korean', 'English', 'Danish'].asObservable();
-
-  @observable
-  ObservableList<String> _menuLanguageDetailLocalList = <String>['K Pop', 'Yankee', '덴마크 우유'].asObservable();
-
-  @observable
-  ObservableList<bool> _menuUseLocalList = <bool>[true, true, false].asObservable();
-
 
 
   @action
@@ -73,6 +65,35 @@ abstract class _MenuStoreLocal with Store {
   }
 
 
+  // Menus
+  @observable
+  ObservableList<List<String>> _menuTitleLocalList = <List<String>>[
+    ['Korean', 'English', 'Danish'],
+    ['Korean2', 'English2', 'Danish2'],
+    ['Korean3', 'English3', 'Danish3'],
+    [],
+    []
+  ].asObservable();
+
+  @observable
+  ObservableList<List<String>> _menuDetailLocalList = <List<String>>[
+    ['111', '111', '111'],
+    ['222', '222', '222'],
+    ['333', '333', '333'],
+    [],
+    []
+  ].asObservable();
+
+  @observable
+  ObservableList<List<bool>> _menuUseLocalList = <List<bool>>[
+    [true, true, false],
+    [true, false, false],
+    [false, true, false],
+    [],
+    [],
+  ].asObservable();
+
+
   // menuList.add(menuLanguageLocalList);
 
 
@@ -85,14 +106,15 @@ abstract class _MenuStoreLocal with Store {
   bool _showMenuAddForm = false;
 
 
-  @action
-  List<String> listMenuLanguageLocal() {
-    // menuItemLocalList.add(MenuItemLocal(id: 1, code: 'KR', locale: 'ko', language: 'Korean', use: true));
-    // menuItemLocalList.add(MenuItemLocal(id: 2, code: 'US', locale: 'en', language: 'English', use: true));
-    // menuItemLocalList.add(MenuItemLocal(id: 3, code: 'DK', locale: 'da', language: 'Danish', use: false));
-    // menuItemLocalList.add(MenuItemLocal(id: 4, code: 'ES', locale: 'es', language: 'España', use: true));
+  // menuItemLocalList.add(MenuItemLocal(id: 1, code: 'KR', locale: 'ko', language: 'Korean', use: true));
+  // menuItemLocalList.add(MenuItemLocal(id: 2, code: 'US', locale: 'en', language: 'English', use: true));
+  // menuItemLocalList.add(MenuItemLocal(id: 3, code: 'DK', locale: 'da', language: 'Danish', use: false));
+  // menuItemLocalList.add(MenuItemLocal(id: 4, code: 'ES', locale: 'es', language: 'España', use: true));
 
-    return _menuLanguageLocalList;
+
+  @action
+  List<String> listMenuTitleLocal(int catId) {
+    return _menuTitleLocalList[catId];
   }
 
   // @action
@@ -103,14 +125,15 @@ abstract class _MenuStoreLocal with Store {
   // }
 
   @action
-  List<String> listMenuLanguageDetailLocal() {
-    return _menuLanguageDetailLocalList;
+  List<String> listMenuDetailLocal(int catId) {
+    return _menuDetailLocalList[catId];
   }
 
   @action
-  List<bool> listMenuUseLocal() {
-    return _menuUseLocalList;
+  List<bool> listMenuUseLocal(int catId) {
+    return _menuUseLocalList[catId];
   }
+
 
   @action
   bool getShowMenuAddFormLocal() {
@@ -119,18 +142,18 @@ abstract class _MenuStoreLocal with Store {
 
 
   @action
-  void addMenuLanguageLocal(String language) {
-    _menuLanguageLocalList.add(language);
+  void addMenuTitleLocal(int catId, String menu) {
+    _menuTitleLocalList[catId].add(menu);
   }
 
   @action
-  void addMenuLanguageDetailLocal(String languageDetail) {
-    _menuLanguageDetailLocalList.add(languageDetail);
+  void addMenuDetailLocal(int catId, String menuDetail) {
+    _menuDetailLocalList[catId].add(menuDetail);
   }
 
   @action
-  void addMenuUseLocal(bool use) {
-    _menuUseLocalList.add(use);
+  void addMenuUseLocal(int catId, bool use) {
+    _menuUseLocalList[catId].add(use);
   }
 
 
@@ -143,15 +166,16 @@ abstract class _MenuStoreLocal with Store {
 
 
   @action
-  void changeMenuUseLocal(int menuId, bool use) {
+  void changeMenuUseLocal(int catId, int menuId, bool use) {
     print('===== changeMenuUseLocal =====');
 
+    print('catId : ' + catId.toString());
     print('menuId : ' + menuId.toString());
     print('use : ' + use.toString());
 
-    _menuUseLocalList[menuId] = use;
+    _menuUseLocalList[catId][menuId] = use;
 
-    print('_menuUseLocalList : ' + _menuUseLocalList.toString());
+    print('_menuUseLocalList[' + catId.toString() + '] : ' + _menuUseLocalList[catId].toString());
 
   }
 
@@ -195,6 +219,7 @@ abstract class _MenuStoreLocal with Store {
     return _current_menu_id;
   }
 
+  /*
   @action
   void changeCurrentMenu(int menuId, bool use) {
     print('@ changeCurrentMenu()');
@@ -216,10 +241,13 @@ abstract class _MenuStoreLocal with Store {
     });
     */
   }
+  */
 
   @action
-  void changeMenuLanguage(int menuId, String value) {
+  void changeMenuTitle(int catId, int menuId, String value) {
     print('@ changeMenuLanguage()');
+
+    print('catId : ' + catId.toString());
     print('menuId : ' + menuId.toString());
     print('language : ' + value);
 
@@ -227,7 +255,7 @@ abstract class _MenuStoreLocal with Store {
     // _current_menu_language = menuLanguageLocalList[menuId];
 
 
-    _menuLanguageLocalList[menuId] = value;
+    _menuTitleLocalList[catId][menuId] = value;
   }
 
   @action
