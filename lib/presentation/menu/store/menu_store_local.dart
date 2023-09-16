@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:boilerplate/core/stores/error/error_store.dart';
 
 // import 'package:boilerplate/domain/entity/language/Language.dart';
-import 'package:boilerplate/domain/entity/menu/menu_item_local.dart';
+import 'package:boilerplate/domain/entity/menu/menu_item.dart';
 
 import 'package:boilerplate/domain/repository/menu/menu_repository_local.dart';
 import 'package:mobx/mobx.dart';
