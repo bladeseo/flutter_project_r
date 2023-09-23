@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:boilerplate/domain/entity/menu/menu.dart';
 import 'package:boilerplate/domain/repository/menu/menu_repository_local.dart';
 import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
 
@@ -10,6 +11,16 @@ class MenuRepositoryImplLocal extends MenuRepositoryLocal {
   // constructor
   MenuRepositoryImplLocal(this._sharedPrefsHelper);
 
+
+  @override
+  Menu? get menu => _sharedPrefsHelper.currentTitle;
+
+
+  @override
+  Future<void> changeCurrentMenuId(int menuId) =>
+      _sharedPrefsHelper.changeCurrentMenuId(menuId);
+
+  /*
   // Theme: --------------------------------------------------------------------
   @override
   Future<void> toggleUseYn(bool value) =>
@@ -34,4 +45,6 @@ class MenuRepositoryImplLocal extends MenuRepositoryLocal {
   @override
   Future<void> changeMenuLanguage(int menuId, String value) =>
       _sharedPrefsHelper.changeMenuLanguage(menuId, value);
+  */
+
 }

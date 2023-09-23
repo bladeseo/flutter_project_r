@@ -6,6 +6,13 @@ class Preferences {
   static const String is_dark_mode = "is_dark_mode";
   static const String current_language = "current_language";
 
-  static const String is_use = "isUse";
-  static const String current_title = "current_title";
+
+  static const String menus = "menus";
+
+  // 활성화된 메뉴
+  static const String current_menu_id = "currentMenuId"; // key 값만 저장하는 거인듯?
+  static const String current_menu = "currentMenu";
+
+  // static const String is_use = "isUse";
+  // static const String current_title = "current_title";
 }

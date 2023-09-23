@@ -12,6 +12,11 @@ import 'package:boilerplate/presentation/login/store/login_store.dart';
 // import 'package:boilerplate/presentation/menu/store/menu_store_rest.dart';
 import 'package:boilerplate/presentation/menu/store/menu_store_local.dart';
 
+import 'package:boilerplate/domain/entity/menu/menu_list.dart';
+import 'package:boilerplate/domain/entity/menu/menu.dart';
+import 'package:boilerplate/domain/entity/menu/menu_item.dart';
+
+
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -44,6 +49,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
 
   late FocusNode _passwordFocusNode;
+
+
+  List<Menu>? _menus; // = _menuStoreLocal.getMenus();
 
 
   var _menuItemSelectedIndex;
@@ -112,23 +120,31 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
     _passwordFocusNode = FocusNode();
 
 
+    _menus = _menuStoreLocal.getMenus();
+    int? menuSize = _menus?.length;
 
+    if (menuSize != null && menuSize > 0) {
 
-    for (var i = 0; i < _menuStoreLocal.listCategoryNameLocal().length; i++) {
-      _widgetOptions.add(Text(
-        _menuStoreLocal.listCategoryNameLocal().elementAt(i),
-        style: optionStyle,
-      ));
+      // 메뉴명 추출
+      for (var i = 0; i < menuSize; i++) {
+        _widgetOptions.add(Text(
+          _menus![i].title,
+          style: optionStyle,
+        ));
 
-      _bottomNavigationBarItemList.add(BottomNavigationBarItem(
-        // icon: Icon(Icons.home),
-        icon: Text(_menuStoreLocal.listCategoryNameLocal().elementAt(i)),
-        activeIcon: Text(_menuStoreLocal.listCategoryNameLocal().elementAt(i) + " +"),
-        label: _menuStoreLocal.listCategoryNameLocal().elementAt(i).toString(),
-        // backgroundColor: Colors.blue // _menuStoreLocal.listCategoryBgColorLocal().elementAt(i),
-      ));
+        _bottomNavigationBarItemList.add(BottomNavigationBarItem(
+          // icon: Icon(Icons.home),
+          icon: Text(_menus![i].title),
+          activeIcon: Text(_menus![i].title + " +"),
+          label: _menus![i].title,
+          // backgroundColor: Colors.blue // _menuStoreLocal.listCategoryBgColorLocal().elementAt(i),
+        ));
+
+      }
 
     }
+
+
 
 
     //
@@ -303,7 +319,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                         // height: 300,
 
                         // color: Colors.redAccent,
-                        color: _menuStoreLocal.listCategoryBgColorLocal().elementAt(_bottomNavBarSelectedIndex),
+                        color: _menus![_bottomNavBarSelectedIndex].bgColor, //  _menuStoreLocal.listCategoryBgColorLocal().elementAt(_bottomNavBarSelectedIndex),
 
                         padding: const EdgeInsets.all(5.0),
                         // alignment: Alignment.bottomCenter,
@@ -500,9 +516,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
   Widget _buildListView(int index) {
       print("index @ _buildListView : " + index.toString());
 
-      return _menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex) != null
+      return _menus![_bottomNavBarSelectedIndex].title != null // _menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex) != null
           ? ListView.separated(
-        itemCount: _menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex)!.length,
+        itemCount: _menus![_bottomNavBarSelectedIndex]!.menuItems!.length,
         separatorBuilder: (context, position) {
           return Divider();
         },
@@ -553,7 +569,8 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
               // '${_menuStoreLocal.menuList?.menus?[position].id}',
 
               // '${_menuStoreLocal.listMenuLanguageLocal()?[_pos]}',
-              '${_menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex)?.elementAt(_pos)}',
+              // '${_menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex)?.elementAt(_pos)}',
+              '${_menus!.elementAt(_bottomNavBarSelectedIndex)!.menuItems!.elementAt(_pos)}',
 
               // '${_menuStoreLocal.listMenuItemLocal()?[position].language}',
               maxLines: 1,
@@ -562,7 +579,8 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
               // style: Theme.of(context).textTheme.titleMedium
               style: TextStyle(
                 fontSize: 20,
-                color: _menuStoreLocal.listMenuUseLocal(_bottomNavBarSelectedIndex)?[_pos] ?? false // _isUse
+                color: // _menuStoreLocal.listMenuUseLocal(_bottomNavBarSelectedIndex)?[_pos] ?? false // _isUse
+                      _menus!.elementAt(_bottomNavBarSelectedIndex)!.menuItems!.elementAt(_pos).isUse ?? false
                     ? Colors.white
                     : Colors.black,
               ),
@@ -570,7 +588,9 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
             subtitle: Text(
               // '${_menuStoreLocal.menuList?.menus?[position].price}',
 
-              '${_menuStoreLocal.listMenuDetailLocal(_bottomNavBarSelectedIndex)?[_pos]} : ' + '${_menuStoreLocal.listMenuUseLocal(_bottomNavBarSelectedIndex)?[_pos]}',
+              // '${_menuStoreLocal.listMenuDetailLocal(_bottomNavBarSelectedIndex)?[_pos]} : ' + '${_menuStoreLocal.listMenuUseLocal(_bottomNavBarSelectedIndex)?[_pos]}',
+              '${_menus!.elementAt(_bottomNavBarSelectedIndex)!.detail} : ' + '${_menus!.elementAt(_bottomNavBarSelectedIndex)!.menuItems!.elementAt(_pos).isUse}',
+
               // '${_menuStoreLocal.listMenuItemLocal()?[position].code}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -579,12 +599,15 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
                   fontSize: 15
               ),
             ),
-            value: _menuStoreLocal.listMenuUseLocal(_bottomNavBarSelectedIndex)?[_pos] ?? false, // _isUse
+            value: // _menuStoreLocal.listMenuUseLocal(_bottomNavBarSelectedIndex)?[_pos] ?? false, // _isUse
+            _menus!.elementAt(_bottomNavBarSelectedIndex)!.menuItems!.elementAt(_pos).isUse ?? false,
             onChanged:(bool value) {
               print('value : ' + value.toString());
 
               // _isUse = value;
-              _menuStoreLocal.changeMenuUseLocal(_bottomNavBarSelectedIndex, _pos, value);
+              // _menuStoreLocal.changeMenuUseLocal(_bottomNavBarSelectedIndex, _pos, value);
+              _menuStoreLocal.toggleMenuItemUseById(_bottomNavBarSelectedIndex, _pos, value);
+
 
               // 테마 변경 호출
               // _themeStore.changeBrightnessToDark(!_themeStore.darkMode);
@@ -704,10 +727,19 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
       textColor: Colors.white,
       onPressed: () async {
         if (_menuTitleController.text.isDefinedAndNotNull && _menuTitleController.text.isNotEmpty) {
+
           // item 추가
-          _menuStoreLocal.addMenuTitleLocal(_bottomNavBarSelectedIndex, _menuTitleController.text.trim());
-          _menuStoreLocal.addMenuDetailLocal(_bottomNavBarSelectedIndex, _menuTitleDetailController.text.trim());
-          _menuStoreLocal.addMenuUseLocal(_bottomNavBarSelectedIndex, true);
+          // _menuStoreLocal.addMenuTitleLocal(_bottomNavBarSelectedIndex, _menuTitleController.text.trim());
+          // _menuStoreLocal.addMenuDetailLocal(_bottomNavBarSelectedIndex, _menuTitleDetailController.text.trim());
+          // _menuStoreLocal.addMenuUseLocal(_bottomNavBarSelectedIndex, true);
+
+          MenuItem _menuItem = MenuItem(
+              title: _menuTitleController.text.trim(),
+              detail: _menuTitleDetailController.text.trim(),
+              isUse: true);
+
+          _menuStoreLocal.insertMenuItem(_bottomNavBarSelectedIndex, _menuItem);
+
 
           // input clear
           _menuTitleController.text = "";
@@ -740,13 +772,14 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
           // changeMenuLanguage
 
+          print('RoundedButtonWidget onPressed ... ');
+
           // _menuStoreLocal.menuItemLocalList?[0].language = _userEmailController.text;
-          _menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex)?[0] = _userEmailController.text;
+          // _menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex)?[0] = _userEmailController.text;
 
           // _showErrorMessage(_menuStoreLocal.menuItemLocalList[0].language.toString());
-
           // _showErrorMessage(_menuStoreLocal.listMenuLanguageLocal()[0]);
-          _showErrorMessage(_menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex).elementAt(0));
+          // _showErrorMessage(_menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex).elementAt(0));
 
           // _showErrorMessage('Please fill in all fields');
         }

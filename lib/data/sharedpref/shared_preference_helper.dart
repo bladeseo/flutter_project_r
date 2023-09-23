@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:boilerplate/domain/entity/menu/menu.dart';
 
 import 'constants/preferences.dart';
 
@@ -51,7 +52,28 @@ class SharedPreferenceHelper {
     return _sharedPreference.setString(Preferences.current_language, language);
   }
 
+
   // Menu:------------------------------------------------------
+  Object? get menus {
+    return _sharedPreference.get(Preferences.menus);
+  }
+
+
+  Future<void> changeCurrentMenuId(int menuId) {
+    return _sharedPreference.setInt(Preferences.current_menu_id, menuId);
+  }
+
+  Object? get currentMenu {
+    return _sharedPreference.get(Preferences.current_menu);
+  }
+
+  Future<void> addMenu(Object menu) {
+    // _sharedPreference.get(Preferences.menus)
+    // return _sharedPreference.setInt(Preferences.current_menu_id, menuId);
+  }
+
+
+  /*
   bool get isUse {
     return _sharedPreference.getBool(Preferences.is_use) ?? false;
   }
@@ -68,11 +90,10 @@ class SharedPreferenceHelper {
     return _sharedPreference.setString(Preferences.current_title, title);
   }
 
-  Future<void> changeCurrentMenu(int menuId, bool use) {
-    return _sharedPreference.setString(Preferences.current_title, menuId.toString());
-  }
+
 
   Future<void> changeMenuLanguage(int menuId, String value) {
     return _sharedPreference.setString(Preferences.current_language, value);
   }
+  */
 }

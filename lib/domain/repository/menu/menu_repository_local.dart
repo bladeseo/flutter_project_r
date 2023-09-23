@@ -1,18 +1,34 @@
 import 'dart:async';
 
+import 'package:boilerplate/domain/entity/menu/menu_list.dart';
+import 'package:boilerplate/domain/entity/menu/menu.dart';
+import 'package:boilerplate/domain/entity/menu/menu_item.dart';
+
 abstract class MenuRepositoryLocal {
-  // Theme: --------------------------------------------------------------------
-  Future<void> toggleUseYn(bool value);
+  // Menus: --------------------------------------------------------------------
+  // 무슨 차이?
+  List<Menu>? getMenus;
+  // List<Menu> get menus;
 
-  bool get isUse;
+  // List<MenuItem> getMenuById(int menuId);
+  Menu? getMenuById(int menuId);
+
+  void insertMenu(Menu menu);
+
+  int updateMenuById(int menuId, Menu menu);
+
+  int deleteMenuById(int menuId);
 
 
-  // Language: -----------------------------------------------------------------
-  Future<void> changeTitle(String value);
+  // Menu: --------------------------------------------------------------------
+  MenuItem? getMenuItemById(int menuId, int menuItemId);
 
-  String? get currentTitle;
+  void insertMenuItem(int menuId, MenuItem menuItem);
 
-  Future<void> changeCurrentMenu(int menuId, bool use);
+  int updateMenuItemById(int menuId, int menuItemId, MenuItem menuItem);
 
-  Future<void> changeMenuLanguage(int menuId, String value);
+  int toggleMenuItemUseById(int menuId, int menuItemId, bool value);
+
+  int deleteMenuItemById(int menuId, int menuItemId);
+
 }
