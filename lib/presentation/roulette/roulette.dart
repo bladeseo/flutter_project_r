@@ -12,6 +12,10 @@ import 'package:boilerplate/presentation/home/store/language/language_store.dart
 
 import 'package:boilerplate/presentation/menu/store/menu_store_local.dart';
 
+import 'package:boilerplate/domain/entity/menu/menu_list.dart';
+import 'package:boilerplate/domain/entity/menu/menu.dart';
+import 'package:boilerplate/domain/entity/menu/menu_item.dart';
+
 import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
 import 'package:boilerplate/presentation/login/store/login_store.dart';
 import 'package:boilerplate/utils/device/device_utils.dart';
@@ -49,6 +53,10 @@ class _RouletteScreenState extends State<RouletteScreen> {
 
   //focus node:-----------------------------------------------------------------
   late FocusNode _passwordFocusNode;
+
+
+  List<Menu>? _menus;
+
 
   // xmlnsXlink="http://www.w3.org/1999/xlink"
 
@@ -112,6 +120,9 @@ class _RouletteScreenState extends State<RouletteScreen> {
   @override
   void initState() {
     super.initState();
+
+    _menus = _menuStoreLocal.getMenus();
+
     _passwordFocusNode = FocusNode();
 
     // svg 편집
@@ -121,9 +132,11 @@ class _RouletteScreenState extends State<RouletteScreen> {
     // String stringToReplace = "we will change this string with multiple words with adding tags";
     // String result = stringToReplace.replaceAllMapped(pattern,(match)=>"<anyTag>${match[0]}</anyTag>");
 
-    for (var i = 0; i < _menuStoreLocal.listMenuTitleLocal(0).length; i++) {
+    // for (var i = 0; i < _menuStoreLocal.listMenuTitleLocal(0).length; i++) {
+    for (var i = 0; i < _menus![0].menuItems!.length; i++) {
       String pattern = "ITEM_" + i.toString();
-      _rawSvg = _rawSvg.replaceAllMapped(pattern, (match) => _menuStoreLocal.listMenuTitleLocal(0).elementAt(i).toString());
+      // _rawSvg = _rawSvg.replaceAllMapped(pattern, (match) => _menuStoreLocal.listMenuTitleLocal(0).elementAt(i).toString());
+      _rawSvg = _rawSvg.replaceAllMapped(pattern, (match) => _menus![0].menuItems![i].title.toString());
     }
   }
 

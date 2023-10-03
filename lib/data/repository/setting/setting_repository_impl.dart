@@ -26,6 +26,7 @@ class SettingRepositoryImpl extends SettingRepository {
   @override
   String? get currentLanguage => _sharedPrefsHelper.currentLanguage;
 
+  /*
   // Menu: -----------------------------------------------------------------
   @override
   Future<void> toggleUseYn(bool value) =>
@@ -41,4 +42,5 @@ class SettingRepositoryImpl extends SettingRepository {
 
   @override
   String? get currentTitle => _sharedPrefsHelper.currentTitle;
+  */
 }

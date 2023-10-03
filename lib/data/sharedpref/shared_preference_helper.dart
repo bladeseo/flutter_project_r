@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:boilerplate/domain/entity/menu/menu_list.dart';
 import 'package:boilerplate/domain/entity/menu/menu.dart';
 
 import 'constants/preferences.dart';
@@ -54,23 +55,35 @@ class SharedPreferenceHelper {
 
 
   // Menu:------------------------------------------------------
-  Object? get menus {
-    return _sharedPreference.get(Preferences.menus);
+  // Object? get menus {
+  List<Menu>? get menus {
+    return _sharedPreference.get(Preferences.menus) as List<Menu>;
   }
 
+  Menu? get currentMenu {
+    List<Menu>? _menus = _sharedPreference.get(Preferences.menus) as List<Menu>;
+    int? currentMenuId = _sharedPreference.getInt(Preferences.current_menu_id);
+    return _menus.elementAt(currentMenuId!);
+
+    // return _sharedPreference.get(Preferences.current_menu);
+  }
+
+  int? get currentMenuId {
+    return _sharedPreference.getInt(Preferences.current_menu_id);
+  }
 
   Future<void> changeCurrentMenuId(int menuId) {
     return _sharedPreference.setInt(Preferences.current_menu_id, menuId);
   }
 
-  Object? get currentMenu {
-    return _sharedPreference.get(Preferences.current_menu);
-  }
 
+
+  /*
   Future<void> addMenu(Object menu) {
     // _sharedPreference.get(Preferences.menus)
     // return _sharedPreference.setInt(Preferences.current_menu_id, menuId);
   }
+  */
 
 
   /*

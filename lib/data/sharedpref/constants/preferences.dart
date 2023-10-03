@@ -10,8 +10,10 @@ class Preferences {
   static const String menus = "menus";
 
   // 활성화된 메뉴
-  static const String current_menu_id = "currentMenuId"; // key 값만 저장하는 거인듯?
-  static const String current_menu = "currentMenu";
+  static const String current_menu_id = "current_menu_id";
+  // static const String current_menu = "current_menu";
+
+
 
   // static const String is_use = "isUse";
   // static const String current_title = "current_title";

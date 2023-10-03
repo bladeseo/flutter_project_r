@@ -570,7 +570,7 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
 
               // '${_menuStoreLocal.listMenuLanguageLocal()?[_pos]}',
               // '${_menuStoreLocal.listMenuTitleLocal(_bottomNavBarSelectedIndex)?.elementAt(_pos)}',
-              '${_menus!.elementAt(_bottomNavBarSelectedIndex)!.menuItems!.elementAt(_pos)}',
+              '${_menus!.elementAt(_bottomNavBarSelectedIndex)!.menuItems!.elementAt(_pos).title}',
 
               // '${_menuStoreLocal.listMenuItemLocal()?[position].language}',
               maxLines: 1,
@@ -602,12 +602,13 @@ class _MenuListScreenLocalState extends State<MenuListScreenLocal> {
             value: // _menuStoreLocal.listMenuUseLocal(_bottomNavBarSelectedIndex)?[_pos] ?? false, // _isUse
             _menus!.elementAt(_bottomNavBarSelectedIndex)!.menuItems!.elementAt(_pos).isUse ?? false,
             onChanged:(bool value) {
-              print('value : ' + value.toString());
+              print('value @ onChanged : ' + value.toString());
 
               // _isUse = value;
               // _menuStoreLocal.changeMenuUseLocal(_bottomNavBarSelectedIndex, _pos, value);
               _menuStoreLocal.toggleMenuItemUseById(_bottomNavBarSelectedIndex, _pos, value);
 
+              setState(() {});
 
               // 테마 변경 호출
               // _themeStore.changeBrightnessToDark(!_themeStore.darkMode);

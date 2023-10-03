@@ -191,12 +191,28 @@ abstract class _MenuStoreLocal with Store {
 
 
   // List 가 아니고 ObservableList 로 해야 된다?
+  @action
+  ObservableList<Menu> getMenus() => _menus;
+
   // @action
-  // ObservableList<Menu> get menus => _menus;
+  // ObservableList<Menu> getMenus() {
+  //   return _menus;
+  // }
+
 
   @action
-  ObservableList<Menu> getMenus() {
-    return _menus;
+  int getCurrentMenuId() {
+    return _current_menu_id;
+  }
+
+  @action
+  void changeCurrentMenuId(int menuId) {
+    _current_menu_id = menuId;
+  }
+
+  @action
+  Menu? getCurrentMenu() {
+    return _menus[_current_menu_id];
   }
 
 
@@ -314,12 +330,6 @@ abstract class _MenuStoreLocal with Store {
   }
 
 
-
-
-  @action
-  int getCurrentMenuId() {
-    return _current_menu_id;
-  }
 
 
 
